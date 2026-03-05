@@ -1,0 +1,250 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Indian Place Value Breaker</title>
+
+<style>
+
+body{
+font-family:'Comic Sans MS',cursive;
+background:linear-gradient(to right,#ffecd2,#fcb69f);
+text-align:center;
+padding:20px;
+margin:0;
+}
+
+.container{
+background:white;
+max-width:700px;
+margin:auto;
+padding:25px;
+border-radius:20px;
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+h1{
+color:#d84315;
+}
+
+input{
+width:80%;
+padding:10px;
+font-size:18px;
+margin:10px 0;
+border-radius:10px;
+border:2px solid #ccc;
+text-align:center;
+font-family:'Comic Sans MS',cursive;
+}
+
+.counter{
+font-size:14px;
+color:#555;
+margin-bottom:10px;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+margin:10px 5px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+background-color:#d84315;
+color:white;
+font-family:'Comic Sans MS',cursive;
+font-weight:bold;
+}
+
+button:hover{
+background-color:#bf360c;
+}
+
+.result-box{
+margin-top:20px;
+background:#fff3e0;
+padding:20px;
+border-radius:15px;
+font-size:18px;
+}
+
+.place{
+margin:8px 0;
+font-weight:bold;
+}
+
+footer{
+margin-top:40px;
+padding:20px;
+font-size:15px;
+}
+
+/* place value colors */
+
+.ones{color:#ff5722;}
+.tens{color:#ff9800;}
+.hundreds{color:#4caf50;}
+.thousands{color:#2196f3;}
+.tenthousands{color:#673ab7;}
+.lakhs{color:#9c27b0;}
+.tenlakhs{color:#e91e63;}
+.crores{color:#009688;}
+.tencrores{color:#795548;}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Indian Place Value Breaker</h1>
+
+<p>Enter a number up to 9 digits and explore its place values.</p>
+
+<input 
+type="text"
+id="numberInput"
+placeholder="Enter number (max 9 digits)"
+maxlength="12"
+inputmode="numeric"
+pattern="[0-9]*"
+oninput="handleInput()">
+
+<div class="counter" id="digitCounter">0 / 9 digits</div>
+
+<br>
+
+<button onclick="breakNumber()">Break Number</button>
+<button onclick="resetFields()">Reset</button>
+
+<div class="result-box" id="result"></div>
+
+</div>
+
+<footer>
+<p>Have fun exploring numbers and becoming a junior mathematician!</p>
+<p><strong>Designed for curious kids by Satish B</strong></p>
+<p>Contact: Satishb.iyer@gmail.com</p>
+</footer>
+
+<script>
+
+function formatIndianNumber(num){
+
+if(num.length<=3) return num;
+
+let lastThree=num.slice(-3);
+let other=num.slice(0,-3);
+
+other=other.replace(/\B(?=(\d{2})+(?!\d))/g,",");
+
+return other+","+lastThree;
+
+}
+
+function handleInput(){
+
+let input=document.getElementById("numberInput");
+
+/* remove non digits */
+let digits=input.value.replace(/[^0-9]/g,'');
+
+/* limit to 9 digits */
+digits=digits.substring(0,9);
+
+/* update digit counter */
+document.getElementById("digitCounter").innerText=
+digits.length+" / 9 digits";
+
+/* apply indian format */
+input.value=formatIndianNumber(digits);
+
+}
+
+function breakNumber(){
+
+let num=document.getElementById("numberInput").value.replace(/,/g,'');
+let resultBox=document.getElementById("result");
+
+if(num==="" || num.length>9){
+resultBox.innerHTML="Please enter a valid number up to 9 digits.";
+return;
+}
+
+num=parseInt(num);
+
+let places=[
+{label:"Ones",value:1,class:"ones"},
+{label:"Tens",value:10,class:"tens"},
+{label:"Hundreds",value:100,class:"hundreds"},
+{label:"Thousands",value:1000,class:"thousands"},
+{label:"Ten Thousands",value:10000,class:"tenthousands"},
+{label:"Lakhs",value:100000,class:"lakhs"},
+{label:"Ten Lakhs",value:1000000,class:"tenlakhs"},
+{label:"Crores",value:10000000,class:"crores"},
+{label:"Ten Crores",value:100000000,class:"tencrores"}
+];
+
+let digits=num.toString().length;
+
+let outputHTML="";
+let expanded=[];
+
+for(let i=digits-1;i>=0;i--){
+
+let place=places[i];
+let digit=Math.floor(num/place.value)%10;
+
+outputHTML+=`<div class='place ${place.class}'>${place.label}: ${digit}</div>`;
+
+expanded.push({
+value:digit*place.value,
+class:place.class
+});
+
+}
+
+/* build expanded form */
+
+let expandedHTML=[];
+
+for(let item of expanded){
+
+if(expandedHTML.length===0 && item.value===0){
+continue;
+}
+
+expandedHTML.push(`<span class="${item.class}">${item.value}</span>`);
+
+}
+
+if(expandedHTML.length===0){
+expandedHTML.push(`<span class="ones">0</span>`);
+}
+
+resultBox.innerHTML=
+outputHTML+
+"<br><strong>Expanded Form:</strong><br>"+
+expandedHTML.join(" + ");
+
+}
+
+function resetFields(){
+
+document.getElementById("numberInput").value="";
+document.getElementById("result").innerHTML="";
+document.getElementById("digitCounter").innerText="0 / 9 digits";
+
+}
+
+</script>
+
+</body>
+</html>

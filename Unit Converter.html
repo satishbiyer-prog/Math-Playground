@@ -1,0 +1,393 @@
+
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Unit Converter</title>
+
+<style>
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #f0f9ff;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 { color: #333; }
+
+.tabs button {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #d0ebff;
+    font-size: 16px;
+}
+
+.tabs button:hover {
+    background-color: #a5d8ff;
+}
+
+.section {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+}
+
+input, select {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button.convert-btn {
+    padding: 8px 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #74c0fc;
+    cursor: pointer;
+}
+
+button.convert-btn:hover {
+    background-color: #4dabf7;
+}
+
+.result {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.explanation {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #fff3bf;
+    border-radius: 10px;
+    text-align: left;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌟 Smart Unit Converter</h1>
+<p>Convert values and understand how the math works!</p>
+
+<div class="tabs">
+    <button onclick="showSection('length')">📏 Length</button>
+    <button onclick="showSection('weight')">⚖ Weight</button>
+    <button onclick="showSection('volume')">🧪 Volume</button>
+    <button onclick="showSection('time')">⏱ Time</button>
+    <button onclick="showSection('temp')">🌡 Temperature</button>
+</div>
+
+<div id="length" class="section"></div>
+<div id="weight" class="section"></div>
+<div id="volume" class="section"></div>
+<div id="time" class="section"></div>
+<div id="temp" class="section"></div>
+
+<script>
+function showSection(id) {
+    let sections = document.getElementsByClassName("section");
+    for (let s of sections) s.style.display = "none";
+    document.getElementById(id).style.display = "block";
+}
+
+function round(num) {
+    if (Math.abs(num) >= 0.01) {
+        return Number(num.toFixed(2));
+    } else {
+        return Number(num.toFixed(6));
+    }
+}
+
+function buildSection(id, units, convertFunction) {
+    let section = document.getElementById(id);
+    section.innerHTML = `
+        <input type="number" id="${id}-value" placeholder="Enter value">
+        <select id="${id}-from">
+            ${units.map(u => `<option value="${u}">${u}</option>`).join("")}
+        </select>
+        to
+        <select id="${id}-to">
+            ${units.map(u => `<option value="${u}">${u}</option>`).join("")}
+        </select>
+        <br>
+        <button class="convert-btn" onclick="${convertFunction}()">Convert</button>
+        <div class="result" id="${id}-result"></div>
+        <div class="explanation" id="${id}-explain"></div>
+    `;
+}
+
+buildSection("length", ["cm","m","km"], "convertLength");
+buildSection("weight", ["mg","g","kg"], "convertWeight");
+buildSection("volume", ["ml","l"], "convertVolume");
+buildSection("time", ["seconds","minutes","hours"], "convertTime");
+buildSection("temp", ["Celsius","Fahrenheit"], "convertTemp");
+
+/* LENGTH */
+
+function convertLength() {
+    let value = parseFloat(document.getElementById("length-value").value);
+    let from = document.getElementById("length-from").value;
+    let to = document.getElementById("length-to").value;
+    if (isNaN(value) || from === to) return;
+
+    let explanation = "";
+
+    if (from === "cm" && to === "m") {
+        explanation += "1 m = 100 cm<br>";
+        explanation += "Since we are converting cm to m, we divide by 100.<br>";
+        explanation += value + " ÷ 100 = " + round(value/100);
+        var result = round(value/100);
+    }
+
+    else if (from === "m" && to === "cm") {
+        explanation += "1 m = 100 cm<br>";
+        explanation += "Since we are converting m to cm, we multiply by 100.<br>";
+        explanation += value + " × 100 = " + round(value*100);
+        var result = round(value*100);
+    }
+
+    else if (from === "km" && to === "m") {
+        explanation += "1 km = 1000 m<br>";
+        explanation += "Since we are converting km to m, we multiply by 1000.<br>";
+        explanation += value + " × 1000 = " + round(value*1000);
+        var result = round(value*1000);
+    }
+
+    else if (from === "m" && to === "km") {
+        explanation += "1 km = 1000 m<br>";
+        explanation += "Since we are converting m to km, we divide by 1000.<br>";
+        explanation += value + " ÷ 1000 = " + round(value/1000);
+        var result = round(value/1000);
+    }
+
+    else if (from === "km" && to === "cm") {
+        explanation += "1 km = 1000 m<br>";
+        explanation += "1 m = 100 cm<br>";
+        explanation += "So, 1 km = 1000 × 100 = 100000 cm<br>";
+        explanation += "Since we are converting km to cm, we multiply by 100000.<br>";
+        explanation += value + " × 100000 = " + round(value*100000);
+        var result = round(value*100000);
+    }
+
+    else if (from === "cm" && to === "km") {
+        explanation += "1 km = 1000 m<br>";
+        explanation += "1 m = 100 cm<br>";
+        explanation += "So, 1 km = 100000 cm<br>";
+        explanation += "Since we are converting cm to km, we divide by 100000.<br>";
+        explanation += value + " ÷ 100000 = " + round(value/100000);
+        var result = round(value/100000);
+    }
+
+    document.getElementById("length-result").innerHTML =
+        value + " " + from + " = " + result + " " + to;
+
+    document.getElementById("length-explain").innerHTML = explanation;
+}
+
+/* WEIGHT */
+
+function convertWeight() {
+    let value = parseFloat(document.getElementById("weight-value").value);
+    let from = document.getElementById("weight-from").value;
+    let to = document.getElementById("weight-to").value;
+    if (isNaN(value) || from === to) return;
+
+    let explanation = "";
+
+    if (from === "kg" && to === "g") {
+        explanation += "1 kg = 1000 g<br>";
+        explanation += "Since we are converting kg to g, we multiply by 1000.<br>";
+        explanation += value + " × 1000 = " + round(value*1000);
+        var result = round(value*1000);
+    }
+
+    else if (from === "g" && to === "kg") {
+        explanation += "1 kg = 1000 g<br>";
+        explanation += "Since we are converting g to kg, we divide by 1000.<br>";
+        explanation += value + " ÷ 1000 = " + round(value/1000);
+        var result = round(value/1000);
+    }
+
+    else if (from === "kg" && to === "mg") {
+        explanation += "1 kg = 1000 g<br>";
+        explanation += "1 g = 1000 mg<br>";
+        explanation += "So, 1 kg = 1000 × 1000 = 1000000 mg<br>";
+        explanation += "Since we are converting kg to mg, we multiply by 1000000.<br>";
+        explanation += value + " × 1000000 = " + round(value*1000000);
+        var result = round(value*1000000);
+    }
+
+    else if (from === "mg" && to === "kg") {
+        explanation += "1 kg = 1000000 mg<br>";
+        explanation += "Since we are converting mg to kg, we divide by 1000000.<br>";
+        explanation += value + " ÷ 1000000 = " + round(value/1000000);
+        var result = round(value/1000000);
+    }
+
+    else if (from === "g" && to === "mg") {
+        explanation += "1 g = 1000 mg<br>";
+        explanation += "Since we are converting g to mg, we multiply by 1000.<br>";
+        explanation += value + " × 1000 = " + round(value*1000);
+        var result = round(value*1000);
+    }
+
+    else if (from === "mg" && to === "g") {
+        explanation += "1 g = 1000 mg<br>";
+        explanation += "Since we are converting mg to g, we divide by 1000.<br>";
+        explanation += value + " ÷ 1000 = " + round(value/1000);
+        var result = round(value/1000);
+    }
+
+    document.getElementById("weight-result").innerHTML =
+        value + " " + from + " = " + result + " " + to;
+
+    document.getElementById("weight-explain").innerHTML = explanation;
+}
+
+/* VOLUME */
+
+function convertVolume() {
+    let value = parseFloat(document.getElementById("volume-value").value);
+    let from = document.getElementById("volume-from").value;
+    let to = document.getElementById("volume-to").value;
+    if (isNaN(value) || from === to) return;
+
+    let explanation = "";
+    let result;
+
+    if (from === "l" && to === "ml") {
+        explanation += "1 L = 1000 ml<br>";
+        explanation += "Since we are converting liters to milliliters, we multiply by 1000.<br>";
+        explanation += value + " × 1000 = " + round(value * 1000);
+        result = round(value * 1000);
+    }
+
+    else if (from === "ml" && to === "l") {
+        explanation += "1 L = 1000 ml<br>";
+        explanation += "Since we are converting milliliters to liters, we divide by 1000.<br>";
+        explanation += value + " ÷ 1000 = " + round(value / 1000);
+        result = round(value / 1000);
+    }
+
+    document.getElementById("volume-result").innerHTML =
+        value + " " + from + " = " + result + " " + to;
+
+    document.getElementById("volume-explain").innerHTML = explanation;
+}
+
+/* TIME */
+
+function convertTime() {
+    let value = parseFloat(document.getElementById("time-value").value);
+    let from = document.getElementById("time-from").value;
+    let to = document.getElementById("time-to").value;
+    if (isNaN(value) || from === to) return;
+
+    let explanation = "";
+
+    if (from === "minutes" && to === "seconds") {
+        explanation += "1 minute = 60 seconds<br>";
+        explanation += "Since we are converting minutes to seconds, we multiply by 60.<br>";
+        explanation += value + " × 60 = " + round(value*60);
+        var result = round(value*60);
+    }
+
+    else if (from === "seconds" && to === "minutes") {
+        explanation += "1 minute = 60 seconds<br>";
+        explanation += "Since we are converting seconds to minutes, we divide by 60.<br>";
+        explanation += value + " ÷ 60 = " + round(value/60);
+        var result = round(value/60);
+    }
+
+    else if (from === "hours" && to === "minutes") {
+        explanation += "1 hour = 60 minutes<br>";
+        explanation += "Since we are converting hours to minutes, we multiply by 60.<br>";
+        explanation += value + " × 60 = " + round(value*60);
+        var result = round(value*60);
+    }
+
+    else if (from === "minutes" && to === "hours") {
+        explanation += "1 hour = 60 minutes<br>";
+        explanation += "Since we are converting minutes to hours, we divide by 60.<br>";
+        explanation += value + " ÷ 60 = " + round(value/60);
+        var result = round(value/60);
+    }
+
+    else if (from === "hours" && to === "seconds") {
+        explanation += "1 hour = 60 minutes<br>";
+        explanation += "1 minute = 60 seconds<br>";
+        explanation += "So, 1 hour = 60 × 60 = 3600 seconds<br>";
+        explanation += "Since we are converting hours to seconds, we multiply by 3600.<br>";
+        explanation += value + " × 3600 = " + round(value*3600);
+        var result = round(value*3600);
+    }
+
+    else if (from === "seconds" && to === "hours") {
+        explanation += "1 hour = 3600 seconds<br>";
+        explanation += "Since we are converting seconds to hours, we divide by 3600.<br>";
+        explanation += value + " ÷ 3600 = " + round(value/3600);
+        var result = round(value/3600);
+    }
+
+    document.getElementById("time-result").innerHTML =
+        value + " " + from + " = " + result + " " + to;
+
+    document.getElementById("time-explain").innerHTML = explanation;
+}
+
+/* TEMPERATURE (UNCHANGED) */
+
+function convertTemp() {
+    let value = parseFloat(document.getElementById("temp-value").value);
+    let from = document.getElementById("temp-from").value;
+    let to = document.getElementById("temp-to").value;
+    if (isNaN(value) || from === to) return;
+
+    let explanation = "";
+    let result;
+
+    if (from === "Celsius" && to === "Fahrenheit") {
+        explanation += "Formula: °F = (°C × 9/5) + 32<br><br>";
+        let step1 = value * 9/5;
+        explanation += value + " × 9/5 = " + round(step1) + "<br>";
+        result = round(step1 + 32);
+        explanation += round(step1) + " + 32 = " + result;
+    }
+    else {
+        explanation += "Formula: °C = (°F − 32) × 5/9<br><br>";
+        let step1 = value - 32;
+        explanation += value + " − 32 = " + round(step1) + "<br>";
+        result = round(step1 * 5/9);
+        explanation += round(step1) + " × 5/9 = " + result;
+    }
+
+    document.getElementById("temp-result").innerHTML =
+        value + " " + from + " = " + result + " " + to;
+
+    document.getElementById("temp-explain").innerHTML = explanation;
+}
+</script>
+
+<br><br>
+
+<p><strong>Keep learning, keep converting, and keep exploring the world of measurements!</strong></p>
+<p><strong>Designed for curious young minds by Satish B</strong></p>
+<p>Contact: Satishb.iyer@gmail.com</p>
+
+</body>
+</html>

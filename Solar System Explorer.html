@@ -1,0 +1,246 @@
+
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Solar System Explorer 🌞</title>
+
+<style>
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+    text-align: center;
+    padding: 20px;
+    color: white;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.description {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #ffffff;
+    color: black;
+    padding: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-size: 18px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    background: #ffeaa7;
+}
+
+.info-box {
+    background: #ffffff;
+    color: black;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 700px;
+    margin: auto;
+    text-align: left;
+    display: none;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌌 Solar System Explorer</h1>
+<p class="description">Click on a planet, moon, or the Sun to explore amazing space facts!</p>
+
+<div class="grid">
+    <div class="card" onclick="showInfo('Sun')">☀ Sun</div>
+    <div class="card" onclick="showInfo('Mercury')">☿ Mercury</div>
+    <div class="card" onclick="showInfo('Venus')">♀ Venus</div>
+    <div class="card" onclick="showInfo('Earth')">🌍 Earth</div>
+    <div class="card" onclick="showInfo('Moon')">🌙 Moon</div>
+    <div class="card" onclick="showInfo('Mars')">♂ Mars</div>
+    <div class="card" onclick="showInfo('Jupiter')">♃ Jupiter</div>
+    <div class="card" onclick="showInfo('Saturn')">♄ Saturn</div>
+    <div class="card" onclick="showInfo('Titan')">🟠 Titan</div>
+    <div class="card" onclick="showInfo('Uranus')">♅ Uranus</div>
+    <div class="card" onclick="showInfo('Neptune')">♆ Neptune</div>
+    <div class="card" onclick="showInfo('Europa')">❄ Europa</div>
+</div>
+
+<div id="info" class="info-box"></div>
+
+<footer>
+<p>Keep exploring space and becoming a young astronomer!</p>
+<p><strong>Designed for curious kids by Satish B</strong></p>
+<p>Contact: Satishb.iyer@gmail.com</p>
+</footer>
+
+<script>
+
+const data = {
+
+Sun: {
+distance: "Center of our Solar System",
+composition: "Hydrogen (about 74%) and Helium (about 24%)",
+atmosphere: "Hot plasma made of ionized gases",
+gravity: "28 times Earth's gravity",
+rotation: "About 25 Earth days (at equator)",
+revolution: "Orbits the Milky Way in about 225 million years",
+fact: "The Sun contains 99.8% of the Solar System’s mass!"
+},
+
+Mercury: {
+distance: "57.9 million km",
+composition: "Rocky with large iron core",
+atmosphere: "Very thin exosphere (oxygen, sodium, hydrogen)",
+gravity: "0.38 times Earth",
+rotation: "59 Earth days",
+revolution: "88 Earth days",
+fact: "Mercury has the most extreme temperature changes."
+},
+
+Venus: {
+distance: "108.2 million km",
+composition: "Rocky planet",
+atmosphere: "Carbon dioxide with sulfuric acid clouds",
+gravity: "0.90 times Earth",
+rotation: "243 Earth days (retrograde)",
+revolution: "225 Earth days",
+fact: "Venus spins backwards compared to most planets."
+},
+
+Earth: {
+distance: "149.6 million km",
+composition: "Rocky with water oceans",
+atmosphere: "Nitrogen (78%) and Oxygen (21%)",
+gravity: "1 (reference)",
+rotation: "24 hours",
+revolution: "365.25 days",
+fact: "Earth is the only known planet with life."
+},
+
+Moon: {
+distance: "384,400 km from Earth",
+composition: "Rocky",
+atmosphere: "Very thin exosphere",
+gravity: "0.16 times Earth",
+rotation: "27.3 days",
+revolution: "27.3 days around Earth",
+fact: "The Moon always shows the same face to Earth."
+},
+
+Mars: {
+distance: "227.9 million km",
+composition: "Rocky with iron oxide surface",
+atmosphere: "Thin carbon dioxide atmosphere",
+gravity: "0.38 times Earth",
+rotation: "24.6 hours",
+revolution: "687 Earth days",
+fact: "Mars has the tallest volcano in the Solar System."
+},
+
+Jupiter: {
+distance: "778.5 million km",
+composition: "Gas giant made of hydrogen and helium",
+atmosphere: "Hydrogen and helium",
+gravity: "2.53 times Earth",
+rotation: "9.9 hours",
+revolution: "11.86 Earth years",
+fact: "Jupiter has the Great Red Spot storm."
+},
+
+Saturn: {
+distance: "1.43 billion km",
+composition: "Gas giant (hydrogen and helium)",
+atmosphere: "Hydrogen and helium",
+gravity: "1.07 times Earth",
+rotation: "10.7 hours",
+revolution: "29.5 Earth years",
+fact: "Saturn is famous for its beautiful rings."
+},
+
+Titan: {
+distance: "Orbits Saturn",
+composition: "Rock and ice",
+atmosphere: "Mostly nitrogen with methane",
+gravity: "0.14 times Earth",
+rotation: "15.9 days",
+revolution: "15.9 days around Saturn",
+fact: "Titan has lakes of liquid methane."
+},
+
+Uranus: {
+distance: "2.87 billion km",
+composition: "Ice giant (water, methane, ammonia)",
+atmosphere: "Hydrogen, helium, methane",
+gravity: "0.89 times Earth",
+rotation: "17.2 hours (tilted sideways)",
+revolution: "84 Earth years",
+fact: "Uranus rotates on its side!"
+},
+
+Neptune: {
+distance: "4.5 billion km",
+composition: "Ice giant",
+atmosphere: "Hydrogen, helium, methane",
+gravity: "1.14 times Earth",
+rotation: "16 hours",
+revolution: "165 Earth years",
+fact: "Neptune has the fastest winds in the Solar System."
+},
+
+Europa: {
+distance: "Orbits Jupiter",
+composition: "Rocky core with icy surface",
+atmosphere: "Very thin oxygen atmosphere",
+gravity: "0.13 times Earth",
+rotation: "3.5 days",
+revolution: "3.5 days around Jupiter",
+fact: "Scientists believe Europa may have an ocean under its ice."
+}
+
+};
+
+function showInfo(name) {
+    const planet = data[name];
+    const box = document.getElementById("info");
+    box.style.display = "block";
+    box.innerHTML = `
+        <h2>${name}</h2>
+        <p><strong>Distance:</strong> ${planet.distance}</p>
+        <p><strong>Composition:</strong> ${planet.composition}</p>
+        <p><strong>Atmosphere:</strong> ${planet.atmosphere}</p>
+        <p><strong>Gravity:</strong> ${planet.gravity}</p>
+        <p><strong>Rotation:</strong> ${planet.rotation}</p>
+        <p><strong>Revolution:</strong> ${planet.revolution}</p>
+        <p><strong>Fun Fact:</strong> ${planet.fact}</p>
+    `;
+}
+
+</script>
+
+</body>
+</html>

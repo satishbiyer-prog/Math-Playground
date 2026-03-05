@@ -1,0 +1,238 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Area & Perimeter Playground</title>
+<style>
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #f0f9ff;
+    text-align: center;
+    padding: 20px;
+}
+h1 { color: #333; }
+
+.tabs button {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #d0ebff;
+    font-size: 16px;
+}
+.tabs button:hover { background-color: #a5d8ff; }
+
+.section {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+}
+
+input {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    font-size: 15px;
+    width: 80px;
+}
+
+button.calc-btn, button.reset-btn {
+    padding: 8px 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+button.calc-btn { background-color: #74c0fc; }
+button.calc-btn:hover { background-color: #4dabf7; }
+button.reset-btn { background-color: #ff8787; margin-left:5px; }
+button.reset-btn:hover { background-color: #f03e3e; color: #fff; }
+
+.result {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.explanation {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #fff3bf;
+    border-radius: 10px;
+    text-align: left;
+}
+
+svg { margin-top: 15px; }
+.highlight { fill-opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<h1>🖌 Area & Perimeter Playground</h1>
+<p>Enter values and see step-by-step calculations with diagrams!</p>
+
+<div class="tabs">
+    <button onclick="showSection('rectangle')">⬛ Rectangle</button>
+    <button onclick="showSection('square')">🔲 Square</button>
+    <button onclick="showSection('circle')">⚪ Circle</button>
+</div>
+
+<div id="rectangle" class="section"></div>
+<div id="square" class="section"></div>
+<div id="circle" class="section"></div>
+
+<script>
+function showSection(id) {
+    let sections = document.getElementsByClassName("section");
+    for (let s of sections) s.style.display = "none";
+    document.getElementById(id).style.display = "block";
+}
+
+function round(num) {
+    if (Math.abs(num) >= 0.01) return Number(num.toFixed(2));
+    else return Number(num.toFixed(6));
+}
+
+function buildSection(id, htmlContent) {
+    document.getElementById(id).innerHTML = htmlContent;
+}
+
+/* RECTANGLE */
+buildSection("rectangle", `
+Length: <input type="number" id="rect-length"> units
+Breadth: <input type="number" id="rect-breadth"> units
+<br>
+<button class="calc-btn" onclick="calcRectangle()">Calculate</button>
+<button class="reset-btn" onclick="resetRectangle()">Reset</button>
+<div class="result" id="rect-result"></div>
+<div class="explanation" id="rect-explain"></div>
+<svg width="220" height="140">
+  <text x="110" y="15" text-anchor="middle">Length = L</text>
+  <text x="10" y="130">Breadth = B</text>
+  <rect id="rect-body" x="30" y="30" width="160" height="80" fill="#d0ebff" stroke="#339af0" stroke-width="2"/>
+</svg>
+`);
+
+/* SQUARE */
+buildSection("square", `
+Side: <input type="number" id="sq-side"> units
+<br>
+<button class="calc-btn" onclick="calcSquare()">Calculate</button>
+<button class="reset-btn" onclick="resetSquare()">Reset</button>
+<div class="result" id="sq-result"></div>
+<div class="explanation" id="sq-explain"></div>
+<svg width="140" height="140">
+  <text x="70" y="15" text-anchor="middle">Side = S</text>
+  <rect id="sq-body" x="20" y="30" width="100" height="100" fill="#ffe066" stroke="#fab005" stroke-width="2"/>
+</svg>
+`);
+
+/* CIRCLE */
+buildSection("circle", `
+Radius: <input type="number" id="circ-radius"> units
+<br>
+<button class="calc-btn" onclick="calcCircle()">Calculate</button>
+<button class="reset-btn" onclick="resetCircle()">Reset</button>
+<div class="result" id="circ-result"></div>
+<div class="explanation" id="circ-explain"></div>
+<svg width="150" height="150">
+  <circle id="circ-body" cx="75" cy="75" r="50" fill="#ffa8a8" stroke="#f03e3e" stroke-width="2"/>
+  <line id="circ-line" x1="75" y1="75" x2="125" y2="75" stroke="#000" stroke-width="2"/>
+  <text x="75" y="70" text-anchor="middle">r</text>
+</svg>
+`);
+
+/* CALCULATIONS */
+
+function calcRectangle() {
+    let L = parseFloat(document.getElementById("rect-length").value);
+    let B = parseFloat(document.getElementById("rect-breadth").value);
+    if(isNaN(L) || isNaN(B)) return;
+
+    let area = round(L*B);
+    let peri = round(2*(L+B));
+
+    document.getElementById("rect-result").innerHTML = `Area = ${area} square units<br>Perimeter = ${peri} units`;
+    document.getElementById("rect-explain").innerHTML =
+        `Area formula: Length × Breadth<br>` +
+        `Area = ${L} × ${B} = ${area}<br><br>` +
+        `Perimeter formula: 2 × (Length + Breadth)<br>` +
+        `Perimeter = 2 × (${L} + ${B}) = ${peri}`;
+
+    // Highlight rectangle
+    document.getElementById("rect-body").setAttribute("fill-opacity", "0.5");
+}
+
+function resetRectangle() {
+    document.getElementById("rect-length").value = "";
+    document.getElementById("rect-breadth").value = "";
+    document.getElementById("rect-result").innerHTML = "";
+    document.getElementById("rect-explain").innerHTML = "";
+    document.getElementById("rect-body").setAttribute("fill-opacity", "1");
+}
+
+function calcSquare() {
+    let S = parseFloat(document.getElementById("sq-side").value);
+    if(isNaN(S)) return;
+
+    let area = round(S*S);
+    let peri = round(4*S);
+
+    document.getElementById("sq-result").innerHTML = `Area = ${area} square units<br>Perimeter = ${peri} units`;
+    document.getElementById("sq-explain").innerHTML =
+        `Area formula: Side × Side<br>` +
+        `Area = ${S} × ${S} = ${area}<br><br>` +
+        `Perimeter formula: 4 × Side<br>` +
+        `Perimeter = 4 × ${S} = ${peri}`;
+
+    document.getElementById("sq-body").setAttribute("fill-opacity","0.5");
+}
+
+function resetSquare() {
+    document.getElementById("sq-side").value = "";
+    document.getElementById("sq-result").innerHTML = "";
+    document.getElementById("sq-explain").innerHTML = "";
+    document.getElementById("sq-body").setAttribute("fill-opacity","1");
+}
+
+function calcCircle() {
+    let R = parseFloat(document.getElementById("circ-radius").value);
+    if(isNaN(R)) return;
+
+    const PI = 3.14;
+    let area = round(PI*R*R);
+    let circ = round(2*PI*R);
+
+    document.getElementById("circ-result").innerHTML = `Area = ${area} square units<br>Circumference = ${circ} units`;
+    document.getElementById("circ-explain").innerHTML =
+        `Area formula: π × r × r<br>` +
+        `Area = 3.14 × ${R} × ${R} = ${area}<br><br>` +
+        `Circumference formula: 2 × π × r<br>` +
+        `Circumference = 2 × 3.14 × ${R} = ${circ}`;
+
+    document.getElementById("circ-body").setAttribute("fill-opacity","0.5");
+}
+
+function resetCircle() {
+    document.getElementById("circ-radius").value = "";
+    document.getElementById("circ-result").innerHTML = "";
+    document.getElementById("circ-explain").innerHTML = "";
+    document.getElementById("circ-body").setAttribute("fill-opacity","1");
+}
+</script>
+
+<br><br>
+<p><strong>Have fun exploring shapes and learning area & perimeter!</strong></p>
+<p><strong>Designed for curious kids by Satish B</strong></p>
+<p>Contact: Satishb.iyer@gmail.com</p>
+
+</body>
+</html>

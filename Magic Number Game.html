@@ -1,0 +1,127 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Number Game</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ffcc00;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        main {
+            padding: 50px 20px;
+        }
+        button {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            background-color: #ff9999;
+        }
+        .step {
+            font-size: 1.3em;
+            margin: 20px 0;
+            color: #333;
+        }
+        footer {
+            background-color: #ffcc00;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Magic Number Game</h1>
+        <p>Follow the steps and see the magic happen!</p>
+    </header>
+
+    <main>
+        <div id="instructions">
+            <p class="step" id="stepText">🤔 Think of a secret number between 1 and 20...</p>
+            <button id="nextBtn">Next ✨</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Enjoy the magic of numbers and have fun learning math tricks!</p>
+        <p>Designed for curious kids by Satish B</p>
+        <p>Contact: Satishb.iyer@gmail.com</p>
+    </footer>
+
+    <script>
+        const evenNumbers = [4, 6, 8, 12];
+
+        function startGame() {
+            const addedNumber = evenNumbers[Math.floor(Math.random() * evenNumbers.length)];
+            const magicNumber = addedNumber / 2;
+
+            const steps = [
+                "🤔 Think of a secret number between 1 and 20...",
+                "✌️ Double it! Imagine it growing bigger...",
+                `➕ Add ${addedNumber} to your number. Give it a little boost!`,
+                "✂️ Divide the total by 2. Whoa, it's shrinking now!",
+                "➖ Subtract your original number. Almost there!",
+                `🎩 Abracadabra! You are left with ${magicNumber}! 🪄`
+            ];
+
+            let currentStep = 0;
+            const stepText = document.getElementById("stepText");
+            const nextBtn = document.getElementById("nextBtn");
+
+            // If Try Again button exists from previous game, remove it
+            const oldAgainBtn = document.getElementById("againBtn");
+            if(oldAgainBtn) oldAgainBtn.remove();
+
+            stepText.textContent = steps[currentStep];
+            nextBtn.style.display = "inline-block";
+
+            nextBtn.onclick = () => {
+                currentStep++;
+                if (currentStep < steps.length) {
+                    stepText.textContent = steps[currentStep];
+                    if(currentStep === steps.length - 1){
+                        nextBtn.style.display = "none";
+
+                        // Add Try Again button
+                        const againBtn = document.createElement("button");
+                        againBtn.id = "againBtn";
+                        againBtn.textContent = "Try Again 🔄";
+                        againBtn.onclick = startGame;
+                        document.getElementById("instructions").appendChild(againBtn);
+                    }
+                }
+            };
+        }
+
+        startGame(); // Initialize first game
+    </script>
+</body>
+</html>

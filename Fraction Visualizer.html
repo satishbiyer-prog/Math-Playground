@@ -1,0 +1,167 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fraction Visualizer 🎨</title>
+
+<style>
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(to right, #ffecd2, #fcb69f);
+    text-align: center;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.description {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    font-size: 18px;
+    width: 150px;
+    text-align: center;
+    border-radius: 8px;
+    border: 2px solid #333;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#barContainer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.bar {
+    display: flex;
+    width: 400px;
+    height: 50px;
+    border: 3px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.segment {
+    flex: 1;
+    border-right: 1px solid #333;
+}
+
+.segment:last-child {
+    border-right: none;
+}
+
+.colored {
+    background-color: #ff6b6b;
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 50px;
+    font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🍰 Fraction Visualizer</h1>
+<p class="description">Enter a fraction like <strong>3/4</strong> and see it as a colorful bar!</p>
+
+<input type="text" id="fractionInput" placeholder="e.g. 3/4">
+<button onclick="drawFraction()">Show Fraction</button>
+
+<div id="barContainer"></div>
+<div id="message" class="message"></div>
+
+<footer>
+<p>Have fun exploring fractions and becoming a young math explorer!</p>
+<p><strong>Designed for curious kids by Satish B</strong></p>
+<p>Contact: Satishb.iyer@gmail.com</p>
+</footer>
+
+<script>
+
+function drawFraction() {
+    const input = document.getElementById("fractionInput").value.trim();
+    const barContainer = document.getElementById("barContainer");
+    const message = document.getElementById("message");
+
+    barContainer.innerHTML = "";
+    message.innerHTML = "";
+
+    const parts = input.split("/");
+
+    if (parts.length !== 2) {
+        message.innerHTML = "Please enter a valid fraction like 2/5.";
+        return;
+    }
+
+    const numerator = parseInt(parts[0]);
+    const denominator = parseInt(parts[1]);
+
+    if (isNaN(numerator) || isNaN(denominator) || denominator <= 0 || numerator < 0) {
+        message.innerHTML = "Only positive numbers allowed. Try again!";
+        return;
+    }
+
+    if (numerator > denominator) {
+        message.innerHTML = "Numerator should be less than or equal to denominator.";
+        return;
+    }
+
+    if (denominator > 20) {
+        message.innerHTML = "Denominator too large. Try 20 or less.";
+        return;
+    }
+
+    const bar = document.createElement("div");
+    bar.className = "bar";
+
+    for (let i = 0; i < denominator; i++) {
+        const segment = document.createElement("div");
+        segment.className = "segment";
+        if (i < numerator) {
+            segment.classList.add("colored");
+        }
+        bar.appendChild(segment);
+    }
+
+    barContainer.appendChild(bar);
+
+    message.innerHTML = `This shows ${numerator}/${denominator}`;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add and Subtract Real Life Units</title>
+
+<style>
+
+body{
+font-family:"Comic Sans MS",cursive;
+background:#f0f9ff;
+text-align:center;
+margin:0;
+padding:0;
+}
+
+h1{
+background:#4CAF50;
+color:white;
+padding:15px;
+margin:0;
+}
+
+.tabs{
+background:#ffd54f;
+padding:10px;
+}
+
+.tabbutton{
+background:#ffe082;
+border:none;
+padding:10px 15px;
+margin:5px;
+font-size:16px;
+cursor:pointer;
+border-radius:8px;
+}
+
+.tabbutton.active{
+background:#4CAF50;
+color:white;
+}
+
+.section{
+display:none;
+padding:20px;
+}
+
+input{
+width:60px;
+font-size:18px;
+padding:5px;
+text-align:center;
+}
+
+select{
+font-size:18px;
+padding:5px;
+}
+
+button.calc{
+margin-top:10px;
+padding:8px 14px;
+font-size:16px;
+cursor:pointer;
+}
+
+.paper{
+display:inline-block;
+background:white;
+border:2px dashed #999;
+padding:10px;
+margin-top:15px;
+font-family:monospace;
+}
+
+.paper table{
+border-collapse:collapse;
+}
+
+.paper td{
+padding:2px 8px;
+text-align:right;
+min-width:50px;
+}
+
+.paper .op{
+text-align:center;
+min-width:20px;
+font-weight:bold;
+}
+
+.paper .line td{
+border-top:2px solid black;
+}
+
+.result{
+margin-top:10px;
+font-weight:bold;
+}
+
+footer{
+margin-top:40px;
+background:#eee;
+padding:20px;
+font-size:14px;
+}
+
+</style>
+
+<script>
+
+function showTab(id,btn){
+
+let sections=document.querySelectorAll(".section");
+sections.forEach(s=>s.style.display="none");
+
+document.getElementById(id).style.display="block";
+
+let tabs=document.querySelectorAll(".tabbutton");
+tabs.forEach(t=>t.classList.remove("active"));
+
+btn.classList.add("active");
+}
+
+function calculate(prefix,base,unit1,unit2){
+
+let a=parseInt(document.getElementById(prefix+"1").value)||0
+let b=parseInt(document.getElementById(prefix+"2").value)||0
+let c=parseInt(document.getElementById(prefix+"3").value)||0
+let d=parseInt(document.getElementById(prefix+"4").value)||0
+let op=document.getElementById(prefix+"op").value
+
+let resU,resS,explain=""
+
+if(op==="+"){
+
+let sub=a+c
+let carry=Math.floor(sub/base)
+let subRes=sub%base
+let main=b+d+carry
+
+resU=main
+resS=subRes
+
+explain="Add the "+unit2+" first.<br>"
+explain+=a+" + "+c+" = "+sub+".<br>"
+
+if(carry>0){
+explain+="Since "+sub+" "+unit2+" is more than "+base+", carry "+carry+" "+unit1+".<br>"
+}
+
+explain+="Now add the "+unit1+".<br>"
+explain+=b+" + "+d+" + "+carry+" = "+main+" "+unit1+"."
+
+}
+
+else{
+
+let main=b
+let sub=a
+
+if(sub<c){
+
+explain+="Cannot subtract "+c+" "+unit2+" from "+sub+" "+unit2+".<br>"
+explain+="Borrow 1 "+unit1+".<br>"
+explain+="1 "+unit1+" = "+base+" "+unit2+".<br>"
+
+sub=sub+base
+main=main-1
+
+}
+
+let subRes=sub-c
+let mainRes=main-d
+
+resU=mainRes
+resS=subRes
+
+explain+="Now subtract "+unit2+": "+sub+" - "+c+" = "+subRes+".<br>"
+explain+="Now subtract "+unit1+": "+main+" - "+d+" = "+mainRes+"."
+
+}
+
+let paper=
+"<div class='paper'><table>"+
+"<tr><td></td><td>"+b+"</td><td>"+a+"</td></tr>"+
+"<tr><td class='op'>"+op+"</td><td>"+d+"</td><td>"+c+"</td></tr>"+
+"<tr class='line'><td></td><td>"+resU+"</td><td>"+resS+"</td></tr>"+
+"</table></div>"
+
+document.getElementById(prefix+"result").innerHTML=
+paper+
+"<div class='result'>Answer: "+resU+" "+unit1+" "+resS+" "+unit2+"</div>"+
+"<p>"+explain+"</p>"
+
+}
+
+function resetTab(prefix){
+
+document.getElementById(prefix+"1").value=""
+document.getElementById(prefix+"2").value=""
+document.getElementById(prefix+"3").value=""
+document.getElementById(prefix+"4").value=""
+document.getElementById(prefix+"result").innerHTML=""
+
+}
+
+</script>
+</head>
+
+<body>
+
+<h1>Add and Subtract Real Life Units</h1>
+
+<div class="tabs">
+<button class="tabbutton active" onclick="showTab('money',this)">💰 Money</button>
+<button class="tabbutton" onclick="showTab('time',this)">⏰ Time</button>
+<button class="tabbutton" onclick="showTab('length',this)">📏 Length</button>
+<button class="tabbutton" onclick="showTab('weight',this)">⚖️ Weight</button>
+<button class="tabbutton" onclick="showTab('distance',this)">🛣️ Distance</button>
+</div>
+
+<div id="money" class="section" style="display:block">
+
+<h2>Rupees and Paise</h2>
+
+<input id="m2" maxlength="4"> ₹
+<input id="m1" maxlength="2"> p
+
+<select id="mop">
+<option>+</option>
+<option>-</option>
+</select>
+
+<input id="m4" maxlength="4"> ₹
+<input id="m3" maxlength="2"> p
+
+<br><br>
+
+<button class="calc" onclick="calculate('m',100,'₹','paise')">Calculate</button>
+<button class="calc" onclick="resetTab('m')">Reset</button>
+
+<div id="mresult"></div>
+
+</div>
+
+<div id="time" class="section">
+
+<h2>Hours and Minutes</h2>
+
+<input id="t2" maxlength="2"> hr
+<input id="t1" maxlength="2"> min
+
+<select id="top">
+<option>+</option>
+<option>-</option>
+</select>
+
+<input id="t4" maxlength="2"> hr
+<input id="t3" maxlength="2"> min
+
+<br><br>
+
+<button class="calc" onclick="calculate('t',60,'hr','min')">Calculate</button>
+<button class="calc" onclick="resetTab('t')">Reset</button>
+
+<div id="tresult"></div>
+
+</div>
+
+<div id="length" class="section">
+
+<h2>Meters and Centimeters</h2>
+
+<input id="l2" maxlength="3"> m
+<input id="l1" maxlength="2"> cm
+
+<select id="lop">
+<option>+</option>
+<option>-</option>
+</select>
+
+<input id="l4" maxlength="3"> m
+<input id="l3" maxlength="2"> cm
+
+<br><br>
+
+<button class="calc" onclick="calculate('l',100,'m','cm')">Calculate</button>
+<button class="calc" onclick="resetTab('l')">Reset</button>
+
+<div id="lresult"></div>
+
+</div>
+
+<div id="weight" class="section">
+
+<h2>Kilograms and Grams</h2>
+
+<input id="w2" maxlength="3"> kg
+<input id="w1" maxlength="3"> g
+
+<select id="wop">
+<option>+</option>
+<option>-</option>
+</select>
+
+<input id="w4" maxlength="3"> kg
+<input id="w3" maxlength="3"> g
+
+<br><br>
+
+<button class="calc" onclick="calculate('w',1000,'kg','g')">Calculate</button>
+<button class="calc" onclick="resetTab('w')">Reset</button>
+
+<div id="wresult"></div>
+
+</div>
+
+<div id="distance" class="section">
+
+<h2>Kilometers and Meters</h2>
+
+<input id="d2" maxlength="3"> km
+<input id="d1" maxlength="3"> m
+
+<select id="dop">
+<option>+</option>
+<option>-</option>
+</select>
+
+<input id="d4" maxlength="3"> km
+<input id="d3" maxlength="3"> m
+
+<br><br>
+
+<button class="calc" onclick="calculate('d',1000,'km','m')">Calculate</button>
+<button class="calc" onclick="resetTab('d')">Reset</button>
+
+<div id="dresult"></div>
+
+</div>
+
+<footer>
+
+Math becomes easier when we understand how numbers convert and combine.<br><br>
+
+Designed for curious kids by Satish B<br><br>
+
+Contact: Satishb.iyer@gmail.com
+
+</footer>
+
+</body>
+</html>

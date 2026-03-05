@@ -1,0 +1,499 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Profit and Loss Explorer</title>
+
+<style>
+
+body{
+font-family:"Comic Sans MS", cursive;
+background:linear-gradient(135deg,#ffecd2,#fcb69f,#a1c4fd,#c2ffd8);
+text-align:center;
+padding:20px;
+}
+
+.container{
+background:white;
+padding:25px;
+border-radius:15px;
+width:92%;
+margin:auto;
+box-shadow:0px 6px 15px rgba(0,0,0,0.2);
+}
+
+h1{
+color:#2b2b8f;
+}
+
+.tabs{
+display:flex;
+justify-content:center;
+margin-top:10px;
+margin-bottom:20px;
+}
+
+.tabs button{
+font-family:"Comic Sans MS";
+padding:12px 20px;
+border:none;
+background:#6ec1ff;
+color:white;
+cursor:pointer;
+font-size:16px;
+border-radius:8px 8px 0 0;
+margin-right:5px;
+transition:0.3s;
+}
+
+.tabs button:hover{
+background:#3ea6ff;
+transform:translateY(-2px);
+}
+
+.tabs button.active{
+background:#2b2b8f;
+}
+
+.tabcontent{
+display:none;
+padding:10px;
+}
+
+table{
+margin:auto;
+margin-top:15px;
+border-collapse:collapse;
+}
+
+th,td{
+padding:10px;
+border:2px solid #ddd;
+}
+
+input{
+padding:6px;
+width:120px;
+text-align:center;
+font-family:"Comic Sans MS";
+}
+
+button.calc{
+margin-top:12px;
+padding:10px 18px;
+border:none;
+border-radius:8px;
+font-family:"Comic Sans MS";
+background:#4CAF50;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button.calc:hover{
+background:#2e8b57;
+transform:scale(1.08);
+}
+
+button.reset{
+background:#ff6b6b;
+}
+
+button.reset:hover{
+background:#e04848;
+}
+
+.profit{
+color:green;
+font-weight:bold;
+}
+
+.loss{
+color:red;
+font-weight:bold;
+}
+
+.result{
+margin-top:12px;
+font-size:18px;
+}
+
+footer{
+margin-top:40px;
+}
+
+</style>
+
+<script>
+
+function showTab(tab,btn){
+
+let contents=document.getElementsByClassName("tabcontent");
+for(let i=0;i<contents.length;i++){
+contents[i].style.display="none";
+}
+
+let buttons=document.querySelectorAll(".tabs button");
+buttons.forEach(b=>b.classList.remove("active"));
+
+document.getElementById(tab).style.display="block";
+btn.classList.add("active");
+
+}
+
+function calcProfitLoss(){
+
+let cp=parseFloat(cp1.value);
+let sp=parseFloat(sp1.value);
+
+if(isNaN(cp)||isNaN(sp)) return;
+
+let profit=sp-cp;
+let loss=cp-sp;
+
+profit1.style.color="black";
+loss1.style.color="black";
+
+if(profit>0){
+
+profit1.value=profit.toFixed(2);
+loss1.value="0";
+profit1.style.color="green";
+
+let percent=(profit/cp)*100;
+
+res1.innerHTML=
+"Selling Price is greater than Cost Price. Hence there is a <b>profit</b>.<br><br>"+
+"Profit Percentage = "+percent.toFixed(2)+"%<br><br>"+
+"Calculation: ("+profit.toFixed(2)+" ÷ "+cp+") × 100 = "+percent.toFixed(2)+"%";
+
+}
+
+else if(loss>0){
+
+loss1.value=loss.toFixed(2);
+profit1.value="0";
+loss1.style.color="red";
+
+let percent=(loss/cp)*100;
+
+res1.innerHTML=
+"Cost Price is greater than Selling Price. Hence there is a <b>loss</b>.<br><br>"+
+"Loss Percentage = "+percent.toFixed(2)+"%<br><br>"+
+"Calculation: ("+loss.toFixed(2)+" ÷ "+cp+") × 100 = "+percent.toFixed(2)+"%";
+
+}
+
+else{
+
+profit1.value="0";
+loss1.value="0";
+
+res1.innerHTML="Cost Price and Selling Price are the same.<br><br>No profit and no loss.";
+
+}
+
+}
+
+function resetProfitLoss(){
+
+cp1.value="";
+sp1.value="";
+profit1.value="";
+loss1.value="";
+res1.innerHTML="";
+
+}
+
+function calcSPProfit(){
+
+let cp=parseFloat(cp2.value);
+let p=parseFloat(p2.value);
+
+if(isNaN(cp)||isNaN(p)) return;
+
+let sp=cp+(cp*p/100);
+
+sp2.value=sp.toFixed(2);
+
+res2.innerHTML="<span class='profit'>Selling Price = "+sp.toFixed(2)+"</span>";
+
+}
+
+function resetSPProfit(){
+
+cp2.value="";
+p2.value="";
+sp2.value="";
+res2.innerHTML="";
+
+}
+
+function calcCPProfit(){
+
+let sp=parseFloat(sp3.value);
+let p=parseFloat(p3.value);
+
+if(isNaN(sp)||isNaN(p)) return;
+
+let cp=(sp*100)/(100+p);
+
+cp3.value=cp.toFixed(2);
+
+res3.innerHTML="Cost Price = "+cp.toFixed(2);
+
+}
+
+function resetCPProfit(){
+
+sp3.value="";
+p3.value="";
+cp3.value="";
+res3.innerHTML="";
+
+}
+
+function calcSPLoss(){
+
+let cp=parseFloat(cp4.value);
+let l=parseFloat(l4.value);
+
+if(isNaN(cp)||isNaN(l)) return;
+
+let sp=cp-(cp*l/100);
+
+sp4.value=sp.toFixed(2);
+
+res4.innerHTML="<span class='loss'>Selling Price = "+sp.toFixed(2)+"</span>";
+
+}
+
+function resetSPLoss(){
+
+cp4.value="";
+l4.value="";
+sp4.value="";
+res4.innerHTML="";
+
+}
+
+function calcCPLoss(){
+
+let sp=parseFloat(sp5.value);
+let l=parseFloat(l5.value);
+
+if(isNaN(sp)||isNaN(l)) return;
+
+let cp=(sp*100)/(100-l);
+
+cp5.value=cp.toFixed(2);
+
+res5.innerHTML="Cost Price = "+cp.toFixed(2);
+
+}
+
+function resetCPLoss(){
+
+sp5.value="";
+l5.value="";
+cp5.value="";
+res5.innerHTML="";
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Profit and Loss Explorer</h1>
+
+<div class="tabs">
+
+<button onclick="showTab('tab1',this)" class="active">Profit / Loss</button>
+<button onclick="showTab('tab2',this)">Profit % Problems</button>
+<button onclick="showTab('tab3',this)">Loss % Problems</button>
+
+</div>
+
+<div id="tab1" class="tabcontent" style="display:block">
+
+<h2>Profit and Loss Calculator</h2>
+
+<p><b>Simple Idea:</b></p>
+<p>If we sell something for more than what we paid, we make a <b>profit</b>.</p>
+<p>If we sell something for less than what we paid, we make a <b>loss</b>.</p>
+
+<p><b>Example:</b></p>
+<p>If a toy costs 50 and we sell it for 60, we make a <b>profit</b> of 10.</p>
+
+<table>
+
+<tr>
+<th>Cost Price</th>
+<th>Selling Price</th>
+<th>Profit</th>
+<th>Loss</th>
+</tr>
+
+<tr>
+<td><input id="cp1"></td>
+<td><input id="sp1"></td>
+<td><input id="profit1" readonly></td>
+<td><input id="loss1" readonly></td>
+</tr>
+
+</table>
+
+<button class="calc" onclick="calcProfitLoss()">Calculate</button>
+<button class="calc reset" onclick="resetProfitLoss()">Reset</button>
+
+<div id="res1" class="result"></div>
+
+</div>
+
+<div id="tab2" class="tabcontent">
+
+<h2>Profit Percentage Problems</h2>
+
+<p><b>Simple Idea:</b></p>
+<p>If we know the <b>profit percentage</b>, we can calculate the selling price.</p>
+<p>Sometimes we may need to find the cost price instead.</p>
+
+<p><b>Example:</b></p>
+<p>Cost Price = 200</p>
+<p>Profit = 10%</p>
+<p>Selling Price = 220</p>
+
+<h3>If the cost price and profit % is given, find selling price</h3>
+
+<table>
+
+<tr>
+<th>Cost Price</th>
+<th>Profit %</th>
+<th>Selling Price</th>
+</tr>
+
+<tr>
+<td><input id="cp2"></td>
+<td><input id="p2"></td>
+<td><input id="sp2" readonly></td>
+</tr>
+
+</table>
+
+<button class="calc" onclick="calcSPProfit()">Calculate</button>
+<button class="calc reset" onclick="resetSPProfit()">Reset</button>
+
+<div id="res2" class="result"></div>
+
+<h3>If the selling price and profit % is given, find cost price</h3>
+
+<table>
+
+<tr>
+<th>Selling Price</th>
+<th>Profit %</th>
+<th>Cost Price</th>
+</tr>
+
+<tr>
+<td><input id="sp3"></td>
+<td><input id="p3"></td>
+<td><input id="cp3" readonly></td>
+</tr>
+
+</table>
+
+<button class="calc" onclick="calcCPProfit()">Calculate</button>
+<button class="calc reset" onclick="resetCPProfit()">Reset</button>
+
+<div id="res3" class="result"></div>
+
+</div>
+
+<div id="tab3" class="tabcontent">
+
+<h2>Loss Percentage Problems</h2>
+
+<p><b>Simple Idea:</b></p>
+<p>If we know the <b>loss percentage</b>, we can calculate the selling price.</p>
+<p>Sometimes we may need to find the cost price instead.</p>
+
+<p><b>Example:</b></p>
+<p>Cost Price = 500</p>
+<p>Loss = 20%</p>
+<p>Selling Price = 400</p>
+
+<h3>If the cost price and loss % is given, find selling price</h3>
+
+<table>
+
+<tr>
+<th>Cost Price</th>
+<th>Loss %</th>
+<th>Selling Price</th>
+</tr>
+
+<tr>
+<td><input id="cp4"></td>
+<td><input id="l4"></td>
+<td><input id="sp4" readonly></td>
+</tr>
+
+</table>
+
+<button class="calc" onclick="calcSPLoss()">Calculate</button>
+<button class="calc reset" onclick="resetSPLoss()">Reset</button>
+
+<div id="res4" class="result"></div>
+
+<h3>If the selling price and loss % is given, find cost price</h3>
+
+<table>
+
+<tr>
+<th>Selling Price</th>
+<th>Loss %</th>
+<th>Cost Price</th>
+</tr>
+
+<tr>
+<td><input id="sp5"></td>
+<td><input id="l5"></td>
+<td><input id="cp5" readonly></td>
+</tr>
+
+</table>
+
+<button class="calc" onclick="calcCPLoss()">Calculate</button>
+<button class="calc reset" onclick="resetCPLoss()">Reset</button>
+
+<div id="res5" class="result"></div>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>Keep exploring how money works in real life through mathematics!</p>
+
+<p>Designed for curious kids by Satish B</p>
+
+<p>Contact: Satishb.iyer@gmail.com</p>
+
+</footer>
+
+</body>
+</html>

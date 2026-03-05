@@ -1,0 +1,150 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Factor Finder & Prime Checker</title>
+
+<style>
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(to right, #74ebd5, #acb6e5);
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    max-width: 600px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+h1 {
+    color: #4a148c;
+}
+
+p {
+    font-size: 16px;
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    text-align: center;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #4a148c;
+    color: white;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #6a1b9a;
+}
+
+.result-box {
+    margin-top: 20px;
+    background-color: #fff9c4;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 16px;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 15px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Factor Finder & Prime Checker</h1>
+
+<p>Enter a whole number and discover which numbers divide it exactly. You will also find out if it is a Prime or Composite number.</p>
+
+<input type="number" id="numberInput" placeholder="Enter a whole number" min="1">
+
+<br>
+
+<button onclick="findFactors()">Find Factors</button>
+<button onclick="resetFields()">Reset</button>
+
+<div class="result-box" id="result"></div>
+
+</div>
+
+<footer>
+<p>Have fun exploring numbers and becoming a junior mathematician!</p>
+<p><strong>Designed for curious kids by Satish B</strong></p>
+<p>Contact: Satishb.iyer@gmail.com</p>
+</footer>
+
+<script>
+function findFactors() {
+    let num = document.getElementById("numberInput").value;
+    let resultBox = document.getElementById("result");
+
+    if (num === "" || num <= 0) {
+        resultBox.innerHTML = "Please enter a valid whole number greater than 0.";
+        return;
+    }
+
+    num = parseInt(num);
+    let factors = [];
+
+    for (let i = 1; i <= num; i++) {
+        if (num % i === 0) {
+            factors.push(i);
+        }
+    }
+
+    let type = "";
+
+    if (num === 1) {
+        type = "1 is neither Prime nor Composite.";
+    } else if (factors.length === 2) {
+        type = num + " is a Prime Number.";
+    } else {
+        type = num + " is a Composite Number.";
+    }
+
+    resultBox.innerHTML =
+        "<strong>Factors of " + num + ":</strong><br>" +
+        factors.join(", ") +
+        "<br><br><strong>" + type + "</strong>";
+}
+
+function resetFields() {
+    document.getElementById("numberInput").value = "";
+    document.getElementById("result").innerHTML = "";
+}
+</script>
+
+</body>
+</html>

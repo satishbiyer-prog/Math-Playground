@@ -1,0 +1,363 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Speed Distance Time Playground</title>
+
+<style>
+
+body{
+font-family:"Comic Sans MS", cursive;
+background:#F6FBFF;
+text-align:center;
+margin:0;
+}
+
+header{
+background:#4CAF50;
+color:white;
+padding:15px;
+font-size:28px;
+}
+
+.container{
+padding:20px;
+}
+
+.explain{
+max-width:700px;
+margin:auto;
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.tabs button{
+font-family:"Comic Sans MS", cursive;
+background:#90CAF9;
+border:none;
+padding:12px 20px;
+margin:5px;
+font-size:18px;
+cursor:pointer;
+border-radius:8px;
+transition:0.2s;
+}
+
+.tabs button:hover{
+transform:translateY(-3px);
+box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+.active{
+background:#FF9800 !important;
+color:white;
+}
+
+.tabcontent{
+display:none;
+background:white;
+padding:20px;
+margin-top:20px;
+border-radius:10px;
+max-width:600px;
+margin-left:auto;
+margin-right:auto;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input{
+padding:8px;
+font-size:16px;
+width:120px;
+margin:5px;
+}
+
+.calcbtn{
+background:#FF9800;
+border:none;
+padding:10px 18px;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+margin-right:8px;
+transition:0.2s;
+}
+
+.calcbtn:hover{
+transform:translateY(-2px);
+box-shadow:0 4px 6px rgba(0,0,0,0.2);
+}
+
+.resetbtn{
+background:#f44336;
+color:white;
+border:none;
+padding:10px 18px;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.resetbtn:hover{
+transform:translateY(-2px);
+box-shadow:0 4px 6px rgba(0,0,0,0.2);
+}
+
+.result{
+margin-top:15px;
+background:#E8F5E9;
+padding:15px;
+border-radius:8px;
+text-align:left;
+}
+
+.units{
+margin-top:30px;
+}
+
+table{
+margin:auto;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:8px 15px;
+}
+
+footer{
+margin-top:40px;
+background:#eee;
+padding:20px;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+Speed • Distance • Time Playground
+</header>
+
+<div class="container">
+
+<div class="explain">
+<b>What is Speed?</b><br><br>
+Speed tells us how fast something moves.  
+If something travels a long distance in a short time, it is moving fast.  
+If it takes a long time to travel the same distance, it is moving slowly.<br><br>
+
+For example:  
+If a cyclist travels 60 km in 2 hours, the speed is 30 km per hour.
+</div>
+
+<div class="tabs">
+<button class="tablink active" onclick="openTab(event,'speed')">🚴 Find Speed</button>
+<button class="tablink" onclick="openTab(event,'distance')">🛣️ Find Distance</button>
+<button class="tablink" onclick="openTab(event,'time')">⏱️ Find Time</button>
+</div>
+
+<!-- SPEED TAB -->
+
+<div id="speed" class="tabcontent" style="display:block">
+
+<h3>Find Speed</h3>
+
+Distance <input type="number" id="sdistance"> km<br>
+Time <input type="number" id="stime"> hours<br>
+
+<button class="calcbtn" onclick="calcSpeed()">Calculate 🚀</button>
+<button class="resetbtn" onclick="resetSpeed()">Reset</button>
+
+<div class="result" id="speedResult"></div>
+
+</div>
+
+<!-- DISTANCE TAB -->
+
+<div id="distance" class="tabcontent">
+
+<h3>Find Distance</h3>
+
+Speed <input type="number" id="dspeed"> km/h<br>
+Time <input type="number" id="dtime"> hours<br>
+
+<button class="calcbtn" onclick="calcDistance()">Calculate 🚀</button>
+<button class="resetbtn" onclick="resetDistance()">Reset</button>
+
+<div class="result" id="distanceResult"></div>
+
+</div>
+
+<!-- TIME TAB -->
+
+<div id="time" class="tabcontent">
+
+<h3>Find Time</h3>
+
+Distance <input type="number" id="tdistance"> km<br>
+Speed <input type="number" id="tspeed"> km/h<br>
+
+<button class="calcbtn" onclick="calcTime()">Calculate 🚀</button>
+<button class="resetbtn" onclick="resetTime()">Reset</button>
+
+<div class="result" id="timeResult"></div>
+
+</div>
+
+<div class="units">
+
+<h3>Units Reference</h3>
+
+<table>
+<tr>
+<th>Quantity</th>
+<th>Common Units</th>
+</tr>
+
+<tr>
+<td>Speed</td>
+<td>km/h , m/s</td>
+</tr>
+
+<tr>
+<td>Distance</td>
+<td>km , m</td>
+</tr>
+
+<tr>
+<td>Time</td>
+<td>hours , minutes , seconds</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<footer>
+Keep exploring how speed, distance and time are connected in everyday journeys!<br><br>
+Designed for curious kids by Satish B<br><br>
+Contact: Satishb.iyer@gmail.com
+</footer>
+
+<script>
+
+function openTab(evt,tabName){
+
+var i,tabcontent,tablinks;
+
+tabcontent=document.getElementsByClassName("tabcontent");
+for(i=0;i<tabcontent.length;i++){
+tabcontent[i].style.display="none";
+}
+
+tablinks=document.getElementsByClassName("tablink");
+for(i=0;i<tablinks.length;i++){
+tablinks[i].classList.remove("active");
+}
+
+document.getElementById(tabName).style.display="block";
+evt.currentTarget.classList.add("active");
+
+}
+
+function calcSpeed(){
+
+let d=document.getElementById("sdistance").value;
+let t=document.getElementById("stime").value;
+
+if(d==""||t==""){
+document.getElementById("speedResult").innerHTML="⚠️ Please enter distance and time.";
+return;
+}
+
+let s=d/t;
+
+document.getElementById("speedResult").innerHTML=
+"<b>Step 1</b><br>Speed = Distance ÷ Time<br><br>"+
+"<b>Step 2</b><br>Substitute values:<br>"+
+"Speed = "+d+" ÷ "+t+"<br><br>"+
+"<b>Step 3</b><br>Divide<br>"+
+"<b>Speed = "+s.toFixed(2)+" km/h</b>";
+
+}
+
+function calcDistance(){
+
+let s=document.getElementById("dspeed").value;
+let t=document.getElementById("dtime").value;
+
+if(s==""||t==""){
+document.getElementById("distanceResult").innerHTML="⚠️ Please enter speed and time.";
+return;
+}
+
+let d=s*t;
+
+document.getElementById("distanceResult").innerHTML=
+"<b>Step 1</b><br>Distance = Speed × Time<br><br>"+
+"<b>Step 2</b><br>Substitute values:<br>"+
+"Distance = "+s+" × "+t+"<br><br>"+
+"<b>Step 3</b><br>Multiply<br>"+
+"<b>Distance = "+d+" km</b>";
+
+}
+
+function calcTime(){
+
+let d=document.getElementById("tdistance").value;
+let s=document.getElementById("tspeed").value;
+
+if(d==""||s==""){
+document.getElementById("timeResult").innerHTML="⚠️ Please enter distance and speed.";
+return;
+}
+
+let t=d/s;
+
+document.getElementById("timeResult").innerHTML=
+"<b>Step 1</b><br>Time = Distance ÷ Speed<br><br>"+
+"<b>Step 2</b><br>Substitute values:<br>"+
+"Time = "+d+" ÷ "+s+"<br><br>"+
+"<b>Step 3</b><br>Divide<br>"+
+"<b>Time = "+t.toFixed(2)+" hours</b>";
+
+}
+
+function resetSpeed(){
+document.getElementById("sdistance").value="";
+document.getElementById("stime").value="";
+document.getElementById("speedResult").innerHTML="";
+}
+
+function resetDistance(){
+document.getElementById("dspeed").value="";
+document.getElementById("dtime").value="";
+document.getElementById("distanceResult").innerHTML="";
+}
+
+function resetTime(){
+document.getElementById("tdistance").value="";
+document.getElementById("tspeed").value="";
+document.getElementById("timeResult").innerHTML="";
+}
+
+</script>
+
+</body>
+</html>

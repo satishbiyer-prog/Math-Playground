@@ -1,0 +1,317 @@
+<!--
+This Math Playground is free and open-source.
+You are welcome to use, modify, and share it.
+MIT License - Copyright (c) 2026 Satish B.
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Roman Numeral Playground</title>
+
+<style>
+
+body{
+font-family:"Comic Sans MS","Comic Sans",cursive;
+background:#fff7e6;
+margin:0;
+text-align:center;
+}
+
+header{
+background:#ffb84d;
+padding:20px;
+color:#333;
+}
+
+h1{
+margin:0;
+}
+
+.container{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin:30px;
+}
+
+.box{
+background:white;
+padding:25px;
+border-radius:15px;
+width:320px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.left{
+background:#e6f7ff;
+}
+
+.right{
+background:#fff0f6;
+}
+
+input{
+padding:10px;
+font-size:16px;
+width:80%;
+border-radius:8px;
+border:1px solid #ccc;
+font-family:"Comic Sans MS","Comic Sans",cursive;
+}
+
+button{
+margin-top:12px;
+padding:8px 14px;
+font-size:15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:#4CAF50;
+color:white;
+font-family:"Comic Sans MS","Comic Sans",cursive;
+}
+
+button:hover{
+background:#3e8e41;
+}
+
+.reset{
+background:#ff6666;
+}
+
+.reset:hover{
+background:#e05555;
+}
+
+.result{
+margin-top:12px;
+font-size:18px;
+font-weight:bold;
+color:#004d00;
+}
+
+table{
+margin:auto;
+margin-top:15px;
+border-collapse:collapse;
+background:white;
+}
+
+td,th{
+border:1px solid #ccc;
+padding:8px 14px;
+}
+
+footer{
+margin-top:40px;
+background:#ffb84d;
+padding:15px;
+}
+
+</style>
+
+<script>
+
+function numberOnly(event){
+var char=event.key;
+if(!/[0-9]/.test(char)){
+event.preventDefault();
+}
+}
+
+function romanOnly(event){
+var char=event.key.toUpperCase();
+if(!/[IVXLCDM]/.test(char)){
+event.preventDefault();
+}
+}
+
+function convertUppercase(){
+var input=document.getElementById("romanInput");
+input.value=input.value.toUpperCase();
+}
+
+function numberToRoman(num){
+
+num=parseInt(num);
+
+if(isNaN(num) || num<=0 || num>3999){
+document.getElementById("romanResult").innerHTML="Enter a number between 1 and 3999";
+return;
+}
+
+var roman="";
+var values=[
+[1000,"M"],
+[900,"CM"],
+[500,"D"],
+[400,"CD"],
+[100,"C"],
+[90,"XC"],
+[50,"L"],
+[40,"XL"],
+[10,"X"],
+[9,"IX"],
+[5,"V"],
+[4,"IV"],
+[1,"I"]
+];
+
+for(var i=0;i<values.length;i++){
+while(num>=values[i][0]){
+roman+=values[i][1];
+num-=values[i][0];
+}
+}
+
+document.getElementById("romanResult").innerHTML="Roman Numeral: "+roman;
+
+}
+
+function romanToNumber(){
+
+var roman=document.getElementById("romanInput").value;
+
+if(roman===""){
+document.getElementById("numberResult").innerHTML="Enter a Roman numeral";
+return;
+}
+
+var map={
+I:1,
+V:5,
+X:10,
+L:50,
+C:100,
+D:500,
+M:1000
+};
+
+var total=0;
+
+for(var i=0;i<roman.length;i++){
+
+var current=map[roman[i]];
+var next=map[roman[i+1]];
+
+if(next>current){
+total+=next-current;
+i++;
+}
+else{
+total+=current;
+}
+
+}
+
+document.getElementById("numberResult").innerHTML="Number: "+total;
+
+}
+
+function resetLeft(){
+document.getElementById("numberInput").value="";
+document.getElementById("romanResult").innerHTML="";
+}
+
+function resetRight(){
+document.getElementById("romanInput").value="";
+document.getElementById("numberResult").innerHTML="";
+}
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Roman Numeral Playground</h1>
+
+<p>
+Roman numerals were used in ancient Rome. Today we still see them on clocks, book chapters, and movie sequels.
+This tool helps you convert between the Hindu-Arabic number system and Roman numerals.
+</p>
+
+</header>
+
+<h3>Roman Numeral Reference</h3>
+
+<table>
+
+<tr>
+<th>Number</th>
+<td>1</td>
+<td>5</td>
+<td>10</td>
+<td>50</td>
+<td>100</td>
+<td>500</td>
+<td>1000</td>
+</tr>
+
+<tr>
+<th>Roman</th>
+<td>I</td>
+<td>V</td>
+<td>X</td>
+<td>L</td>
+<td>C</td>
+<td>D</td>
+<td>M</td>
+</tr>
+
+</table>
+
+<div class="container">
+
+<div class="box left">
+
+<h3>Hindu-Arabic Number → Roman Numeral</h3>
+
+<input type="text" id="numberInput" placeholder="Enter a number" onkeypress="numberOnly(event)">
+
+<br>
+
+<button onclick="numberToRoman(document.getElementById('numberInput').value)">Convert</button>
+
+<button class="reset" onclick="resetLeft()">Reset</button>
+
+<div id="romanResult" class="result"></div>
+
+</div>
+
+<div class="box right">
+
+<h3>Roman Numeral → Hindu-Arabic Number</h3>
+
+<input type="text" id="romanInput" placeholder="Enter Roman numeral"
+onkeypress="romanOnly(event)" oninput="convertUppercase()">
+
+<br>
+
+<button onclick="romanToNumber()">Convert</button>
+
+<button class="reset" onclick="resetRight()">Reset</button>
+
+<div id="numberResult" class="result"></div>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>Keep exploring number systems and how people counted in different times!</p>
+
+<p>Designed for curious kids by Satish B</p>
+
+<p>Contact: Satishb.iyer@gmail.com</p>
+
+</footer>
+
+</body>
+</html>
