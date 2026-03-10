@@ -1,243 +1,464 @@
-
 <!--
 This Math Playground is free and open-source.
 You are welcome to use, modify, and share it.
 MIT License - Copyright (c) 2026 Satish B.
 -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Solar System Explorer 🌞</title>
+<title>Solar System Explorer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-    text-align: center;
-    padding: 20px;
-    color: white;
+
+body{
+font-family:'Baloo 2',cursive;
+font-size:18px;
+background:#000;
+text-align:center;
+padding:20px;
+color:white;
 }
 
-h1 {
-    font-size: 36px;
+h1{font-size:36px;margin-bottom:10px;}
+
+.description{
+margin-bottom:25px;
+color:#ccc;
 }
 
-.description {
-    font-size: 18px;
-    margin-bottom: 20px;
+.grid{
+display:grid;
+grid-template-columns:repeat(9,1fr);
+gap:10px;
+margin-bottom:30px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
-    margin-bottom: 30px;
+.card{
+background:#0a1e3f;
+color:white;
+padding:12px;
+border-radius:8px;
+cursor:pointer;
+border:1px solid #1d3b6e;
+transition:all .25s;
+font-size:16px;
 }
 
-.card {
-    background: #ffffff;
-    color: black;
-    padding: 15px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: transform 0.3s;
-    font-size: 18px;
+.card:hover{
+box-shadow:0 0 12px #ffd000;
 }
 
-.card:hover {
-    transform: scale(1.05);
-    background: #ffeaa7;
+.card.active{
+background:#ffd000;
+color:black;
+box-shadow:0 0 12px #ffd000;
 }
 
-.info-box {
-    background: #ffffff;
-    color: black;
-    padding: 20px;
-    border-radius: 15px;
-    max-width: 700px;
-    margin: auto;
-    text-align: left;
-    display: none;
+.info-box{
+background:white;
+color:black;
+padding:25px;
+border-radius:12px;
+max-width:900px;
+margin:auto;
+display:none;
+gap:30px;
+align-items:center;
+justify-content:space-between;
 }
 
-footer {
-    margin-top: 40px;
-    font-size: 16px;
+.info-text{
+flex:1;
+text-align:left;
 }
+
+.planet-img{
+width:260px;
+height:260px;
+object-fit:cover;
+border-radius:10px;
+border:3px solid #333;
+background:black;
+}
+
+footer{
+margin-top:40px;
+font-size:16px;
+color:#bbb;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🌌 Solar System Explorer</h1>
-<p class="description">Click on a planet, moon, or the Sun to explore amazing space facts!</p>
+<h1>Solar System Explorer</h1>
+<p class="description">Click any object to explore fascinating space facts.</p>
 
 <div class="grid">
-    <div class="card" onclick="showInfo('Sun')">☀ Sun</div>
-    <div class="card" onclick="showInfo('Mercury')">☿ Mercury</div>
-    <div class="card" onclick="showInfo('Venus')">♀ Venus</div>
-    <div class="card" onclick="showInfo('Earth')">🌍 Earth</div>
-    <div class="card" onclick="showInfo('Moon')">🌙 Moon</div>
-    <div class="card" onclick="showInfo('Mars')">♂ Mars</div>
-    <div class="card" onclick="showInfo('Jupiter')">♃ Jupiter</div>
-    <div class="card" onclick="showInfo('Saturn')">♄ Saturn</div>
-    <div class="card" onclick="showInfo('Titan')">🟠 Titan</div>
-    <div class="card" onclick="showInfo('Uranus')">♅ Uranus</div>
-    <div class="card" onclick="showInfo('Neptune')">♆ Neptune</div>
-    <div class="card" onclick="showInfo('Europa')">❄ Europa</div>
+
+<div class="card" onclick="showInfo(event,'Sun')">Sun</div>
+<div class="card" onclick="showInfo(event,'Mercury')">Mercury</div>
+<div class="card" onclick="showInfo(event,'Venus')">Venus</div>
+<div class="card" onclick="showInfo(event,'Earth')">Earth</div>
+<div class="card" onclick="showInfo(event,'Moon')">Moon</div>
+<div class="card" onclick="showInfo(event,'Mars')">Mars</div>
+<div class="card" onclick="showInfo(event,'Phobos')">Phobos</div>
+<div class="card" onclick="showInfo(event,'Deimos')">Deimos</div>
+<div class="card" onclick="showInfo(event,'Jupiter')">Jupiter</div>
+
+<div class="card" onclick="showInfo(event,'Io')">Io</div>
+<div class="card" onclick="showInfo(event,'Europa')">Europa</div>
+<div class="card" onclick="showInfo(event,'Ganymede')">Ganymede</div>
+<div class="card" onclick="showInfo(event,'Callisto')">Callisto</div>
+<div class="card" onclick="showInfo(event,'Saturn')">Saturn</div>
+<div class="card" onclick="showInfo(event,'Titan')">Titan</div>
+<div class="card" onclick="showInfo(event,'Uranus')">Uranus</div>
+<div class="card" onclick="showInfo(event,'Neptune')">Neptune</div>
+<div class="card" onclick="showInfo(event,'Triton')">Triton</div>
+
+<div class="card" onclick="showInfo(event,'Pluto')">Pluto</div>
+<div class="card" onclick="showInfo(event,'Haumea')">Haumea</div>
+<div class="card" onclick="showInfo(event,'Makemake')">Makemake</div>
+<div class="card" onclick="showInfo(event,'Ceres')">Ceres</div>
+<div class="card" onclick="showInfo(event,'SagittariusA')">Sagittarius A*</div>
+<div class="card" onclick="showInfo(event,'Andromeda')">Andromeda</div>
+<div class="card" onclick="showInfo(event,'Triangulum')">Triangulum</div>
+<div class="card" onclick="showInfo(event,'MilkyWay')">Milky Way</div>
+<div class="card" onclick="showInfo(event,'ProximaCentauri')">Proxima Centauri</div>
+
 </div>
 
 <div id="info" class="info-box"></div>
 
 <footer>
-<p>Keep exploring space and becoming a young astronomer!</p>
+<p>Space is full of surprises — keep exploring!</p>
 <p><strong>Designed for curious kids by Satish B</strong></p>
 <p>Contact: Satishb.iyer@gmail.com</p>
 </footer>
 
 <script>
 
-const data = {
+const data={
 
-Sun: {
-distance: "Center of our Solar System",
-composition: "Hydrogen (about 74%) and Helium (about 24%)",
-atmosphere: "Hot plasma made of ionized gases",
-gravity: "28 times Earth's gravity",
-rotation: "About 25 Earth days (at equator)",
-revolution: "Orbits the Milky Way in about 225 million years",
-fact: "The Sun contains 99.8% of the Solar System’s mass!"
+Sun:{
+distance:"Center of our Solar System",
+composition:"Hydrogen and Helium plasma",
+atmosphere:"Hot plasma called the solar corona",
+gravity:"28 times Earth gravity",
+rotation:"25 Earth days",
+revolution:"225 million Earth years around Milky Way",
+moons:"None",
+fact:"Contains 99.8% of the mass of the Solar System."
 },
 
-Mercury: {
-distance: "57.9 million km",
-composition: "Rocky with large iron core",
-atmosphere: "Very thin exosphere (oxygen, sodium, hydrogen)",
-gravity: "0.38 times Earth",
-rotation: "59 Earth days",
-revolution: "88 Earth days",
-fact: "Mercury has the most extreme temperature changes."
+Mercury:{
+distance:"57.9 million km from Sun",
+composition:"Rocky planet with large iron core",
+atmosphere:"Very thin exosphere",
+gravity:"0.38 times Earth gravity",
+rotation:"59 Earth days",
+revolution:"88 Earth days",
+moons:"0",
+fact:"Mercury experiences extreme temperature swings."
 },
 
-Venus: {
-distance: "108.2 million km",
-composition: "Rocky planet",
-atmosphere: "Carbon dioxide with sulfuric acid clouds",
-gravity: "0.90 times Earth",
-rotation: "243 Earth days (retrograde)",
-revolution: "225 Earth days",
-fact: "Venus spins backwards compared to most planets."
+Venus:{
+distance:"108 million km from Sun",
+composition:"Rocky planet",
+atmosphere:"Thick carbon dioxide with sulfuric acid clouds",
+gravity:"0.90 times Earth gravity",
+rotation:"243 Earth days",
+revolution:"225 Earth days",
+moons:"0",
+fact:"Venus rotates backwards compared to most planets."
 },
 
-Earth: {
-distance: "149.6 million km",
-composition: "Rocky with water oceans",
-atmosphere: "Nitrogen (78%) and Oxygen (21%)",
-gravity: "1 (reference)",
-rotation: "24 hours",
-revolution: "365.25 days",
-fact: "Earth is the only known planet with life."
+Earth:{
+distance:"149.6 million km from Sun",
+composition:"Rock and water",
+atmosphere:"Nitrogen and oxygen",
+gravity:"1 time Earth gravity",
+rotation:"1 Earth day",
+revolution:"365.25 Earth days",
+moons:"1",
+fact:"Only known planet that supports life."
 },
 
-Moon: {
-distance: "384,400 km from Earth",
-composition: "Rocky",
-atmosphere: "Very thin exosphere",
-gravity: "0.16 times Earth",
-rotation: "27.3 days",
-revolution: "27.3 days around Earth",
-fact: "The Moon always shows the same face to Earth."
+Moon:{
+distance:"384,400 km from Earth",
+composition:"Rocky",
+atmosphere:"Extremely thin exosphere",
+gravity:"0.16 times Earth gravity",
+rotation:"27.3 Earth days",
+revolution:"27.3 Earth days around Earth",
+moons:"None",
+fact:"The Moon always shows the same side to Earth."
 },
 
-Mars: {
-distance: "227.9 million km",
-composition: "Rocky with iron oxide surface",
-atmosphere: "Thin carbon dioxide atmosphere",
-gravity: "0.38 times Earth",
-rotation: "24.6 hours",
-revolution: "687 Earth days",
-fact: "Mars has the tallest volcano in the Solar System."
+Mars:{
+distance:"227.9 million km from Sun",
+composition:"Rocky with iron oxide dust",
+atmosphere:"Thin carbon dioxide atmosphere",
+gravity:"0.38 times Earth gravity",
+rotation:"1.03 Earth days",
+revolution:"687 Earth days",
+moons:"2 (Phobos and Deimos)",
+fact:"Mars hosts Olympus Mons, the tallest volcano in the Solar System."
 },
 
-Jupiter: {
-distance: "778.5 million km",
-composition: "Gas giant made of hydrogen and helium",
-atmosphere: "Hydrogen and helium",
-gravity: "2.53 times Earth",
-rotation: "9.9 hours",
-revolution: "11.86 Earth years",
-fact: "Jupiter has the Great Red Spot storm."
+Phobos:{
+distance:"6,000 km from Mars",
+composition:"Rocky",
+atmosphere:"None",
+gravity:"0.0006 times Earth gravity",
+rotation:"0.32 Earth days",
+revolution:"0.32 Earth days",
+moons:"None",
+fact:"Phobos may break apart into a ring around Mars."
 },
 
-Saturn: {
-distance: "1.43 billion km",
-composition: "Gas giant (hydrogen and helium)",
-atmosphere: "Hydrogen and helium",
-gravity: "1.07 times Earth",
-rotation: "10.7 hours",
-revolution: "29.5 Earth years",
-fact: "Saturn is famous for its beautiful rings."
+Deimos:{
+distance:"23,500 km from Mars",
+composition:"Rocky",
+atmosphere:"None",
+gravity:"0.0003 times Earth gravity",
+rotation:"1.26 Earth days",
+revolution:"1.26 Earth days",
+moons:"None",
+fact:"Deimos is smoother and rounder than Phobos."
 },
 
-Titan: {
-distance: "Orbits Saturn",
-composition: "Rock and ice",
-atmosphere: "Mostly nitrogen with methane",
-gravity: "0.14 times Earth",
-rotation: "15.9 days",
-revolution: "15.9 days around Saturn",
-fact: "Titan has lakes of liquid methane."
+Jupiter:{
+distance:"778 million km from Sun",
+composition:"Gas giant",
+atmosphere:"Hydrogen and helium",
+gravity:"2.53 times Earth gravity",
+rotation:"0.41 Earth days",
+revolution:"4333 Earth days",
+moons:"95 known moons",
+fact:"The Great Red Spot is a giant storm larger than Earth."
 },
 
-Uranus: {
-distance: "2.87 billion km",
-composition: "Ice giant (water, methane, ammonia)",
-atmosphere: "Hydrogen, helium, methane",
-gravity: "0.89 times Earth",
-rotation: "17.2 hours (tilted sideways)",
-revolution: "84 Earth years",
-fact: "Uranus rotates on its side!"
+Io:{
+distance:"421,700 km from Jupiter",
+composition:"Rocky",
+atmosphere:"Sulfur dioxide",
+gravity:"0.18 times Earth gravity",
+rotation:"1.77 Earth days",
+revolution:"1.77 Earth days",
+moons:"None",
+fact:"Most volcanically active body in the Solar System."
 },
 
-Neptune: {
-distance: "4.5 billion km",
-composition: "Ice giant",
-atmosphere: "Hydrogen, helium, methane",
-gravity: "1.14 times Earth",
-rotation: "16 hours",
-revolution: "165 Earth years",
-fact: "Neptune has the fastest winds in the Solar System."
+Europa:{
+distance:"670,900 km from Jupiter",
+composition:"Rock and ice",
+atmosphere:"Thin oxygen",
+gravity:"0.13 times Earth gravity",
+rotation:"3.55 Earth days",
+revolution:"3.55 Earth days",
+moons:"None",
+fact:"Likely has an ocean beneath its ice."
 },
 
-Europa: {
-distance: "Orbits Jupiter",
-composition: "Rocky core with icy surface",
-atmosphere: "Very thin oxygen atmosphere",
-gravity: "0.13 times Earth",
-rotation: "3.5 days",
-revolution: "3.5 days around Jupiter",
-fact: "Scientists believe Europa may have an ocean under its ice."
+Ganymede:{
+distance:"1.07 million km from Jupiter",
+composition:"Rock and ice",
+atmosphere:"Very thin oxygen",
+gravity:"0.15 times Earth gravity",
+rotation:"7.15 Earth days",
+revolution:"7.15 Earth days",
+moons:"None",
+fact:"Largest moon in the Solar System."
+},
+
+Callisto:{
+distance:"1.88 million km from Jupiter",
+composition:"Rock and ice",
+atmosphere:"Very thin carbon dioxide",
+gravity:"0.13 times Earth gravity",
+rotation:"16.7 Earth days",
+revolution:"16.7 Earth days",
+moons:"None",
+fact:"One of the most heavily cratered worlds."
+},
+
+Saturn:{
+distance:"1.43 billion km from Sun",
+composition:"Gas giant",
+atmosphere:"Hydrogen and helium",
+gravity:"1.07 times Earth gravity",
+rotation:"0.45 Earth days",
+revolution:"10,759 Earth days",
+moons:"146 known moons",
+fact:"Saturn's rings are made mostly of ice."
+},
+
+Titan:{
+distance:"1.2 million km from Saturn",
+composition:"Ice and rock",
+atmosphere:"Thick nitrogen atmosphere",
+gravity:"0.14 times Earth gravity",
+rotation:"15.9 Earth days",
+revolution:"15.9 Earth days",
+moons:"None",
+fact:"Titan has lakes of liquid methane."
+},
+
+Uranus:{
+distance:"2.87 billion km from Sun",
+composition:"Ice giant",
+atmosphere:"Hydrogen helium methane",
+gravity:"0.89 times Earth gravity",
+rotation:"0.72 Earth days",
+revolution:"30,687 Earth days",
+moons:"27 known moons",
+fact:"Uranus rotates on its side."
+},
+
+Neptune:{
+distance:"4.5 billion km from Sun",
+composition:"Ice giant",
+atmosphere:"Hydrogen helium methane",
+gravity:"1.14 times Earth gravity",
+rotation:"0.67 Earth days",
+revolution:"60,190 Earth days",
+moons:"14 known moons",
+fact:"Fastest winds in the Solar System."
+},
+
+Triton:{
+distance:"355,000 km from Neptune",
+composition:"Ice and rock",
+atmosphere:"Thin nitrogen",
+gravity:"0.08 times Earth gravity",
+rotation:"5.88 Earth days",
+revolution:"5.88 Earth days",
+moons:"None",
+fact:"Orbits Neptune backwards."
+},
+
+Pluto:{
+distance:"5.9 billion km from Sun",
+composition:"Rock and ice",
+atmosphere:"Thin nitrogen",
+gravity:"0.06 times Earth gravity",
+rotation:"6.39 Earth days",
+revolution:"90,560 Earth days",
+moons:"5",
+fact:"Reclassified as dwarf planet in 2006."
+},
+
+Haumea:{
+distance:"6.5 billion km from Sun",
+composition:"Rock and ice",
+atmosphere:"None detected",
+gravity:"0.04 times Earth gravity",
+rotation:"0.16 Earth days",
+revolution:"103,774 Earth days",
+moons:"2",
+fact:"Haumea is stretched into an oval shape."
+},
+
+Makemake:{
+distance:"6.8 billion km from Sun",
+composition:"Rock and ice",
+atmosphere:"Very thin methane",
+gravity:"0.05 times Earth gravity",
+rotation:"0.94 Earth days",
+revolution:"111,845 Earth days",
+moons:"1",
+fact:"Named after a Rapa Nui creation god."
+},
+
+Ceres:{
+distance:"414 million km from Sun",
+composition:"Rock and ice",
+atmosphere:"Very thin water vapor traces",
+gravity:"0.03 times Earth gravity",
+rotation:"0.38 Earth days",
+revolution:"1680 Earth days",
+moons:"0",
+fact:"Largest object in the asteroid belt."
+},
+
+SagittariusA:{
+distance:"26,700 light years from Earth",
+composition:"Supermassive black hole",
+fact:"Mass equals about 4 million Suns."
+},
+
+Andromeda:{
+distance:"2.5 million light years",
+composition:"Spiral galaxy",
+fact:"Closest large galaxy to the Milky Way."
+},
+
+Triangulum:{
+distance:"2.73 million light years",
+composition:"Spiral galaxy",
+fact:"Third-largest galaxy in the Local Group."
+},
+
+MilkyWay:{
+distance:"Our home galaxy",
+composition:"Spiral galaxy with 100–400 billion stars",
+fact:"Our Solar System lies in one of its spiral arms."
+},
+
+ProximaCentauri:{
+distance:"4.24 light years",
+composition:"Red dwarf star",
+fact:"Closest star to the Sun."
 }
 
 };
 
-function showInfo(name) {
-    const planet = data[name];
-    const box = document.getElementById("info");
-    box.style.display = "block";
-    box.innerHTML = `
-        <h2>${name}</h2>
-        <p><strong>Distance:</strong> ${planet.distance}</p>
-        <p><strong>Composition:</strong> ${planet.composition}</p>
-        <p><strong>Atmosphere:</strong> ${planet.atmosphere}</p>
-        <p><strong>Gravity:</strong> ${planet.gravity}</p>
-        <p><strong>Rotation:</strong> ${planet.rotation}</p>
-        <p><strong>Revolution:</strong> ${planet.revolution}</p>
-        <p><strong>Fun Fact:</strong> ${planet.fact}</p>
-    `;
+function showInfo(event,name){
+
+const obj=data[name];
+const box=document.getElementById("info");
+
+document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
+event.currentTarget.classList.add("active");
+
+const imgName=name.toLowerCase();
+
+box.style.display="flex";
+
+box.innerHTML=`
+
+<div class="info-text">
+
+<h2>${name}</h2>
+
+${obj.distance?`<p><b>Distance:</b> ${obj.distance}</p>`:""}
+
+${obj.composition?`<p><b>Composition:</b> ${obj.composition}</p>`:""}
+
+${obj.atmosphere?`<p><b>Atmosphere:</b> ${obj.atmosphere}</p>`:""}
+
+${obj.gravity?`<p><b>Gravity:</b> ${obj.gravity}</p>`:""}
+
+${obj.rotation?`<p><b>Rotation:</b> ${obj.rotation}</p>`:""}
+
+${obj.revolution?`<p><b>Revolution:</b> ${obj.revolution}</p>`:""}
+
+${obj.moons?`<p><b>Moons:</b> ${obj.moons}</p>`:""}
+
+<p><b>Fun Fact:</b> ${obj.fact}</p>
+
+</div>
+
+<img src="images/${imgName}.jpg" class="planet-img">
+
+`;
+
 }
 
 </script>

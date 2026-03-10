@@ -4,35 +4,48 @@ You are welcome to use, modify, and share it.
 MIT License - Copyright (c) 2026 Satish B.
 -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magic Number Game</title>
+
+    <!-- Google Fonts: Baloo 2 -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            font-family: 'Baloo 2', cursive;
+            font-size: 16px;
             text-align: center;
             background-color: #f0f8ff;
             margin: 0;
             padding: 0;
         }
+
         header {
             background-color: #ffcc00;
             padding: 20px;
         }
+
         h1 {
             margin: 0;
-            font-size: 2em;
+            font-size: 36px;
         }
+
+        header p {
+            font-size: 18px;
+            margin-top: 8px;
+        }
+
         main {
             padding: 50px 20px;
         }
+
         button {
-            font-family: 'Comic Sans MS', cursive;
-            font-size: 1.2em;
+            font-family: 'Baloo 2', cursive;
+            font-size: 20px;
             padding: 10px 20px;
             margin: 20px;
             cursor: pointer;
@@ -40,11 +53,13 @@ MIT License - Copyright (c) 2026 Satish B.
             border: none;
             background-color: #ff9999;
         }
+
         .step {
-            font-size: 1.3em;
+            font-size: 22px;
             margin: 20px 0;
             color: #333;
         }
+
         footer {
             background-color: #ffcc00;
             padding: 20px;
@@ -52,8 +67,20 @@ MIT License - Copyright (c) 2026 Satish B.
             bottom: 0;
             width: 100%;
         }
+
         footer p {
             margin: 5px 0;
+            font-size: 16px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width:480px){
+            h1 { font-size: 28px; }
+            header p { font-size: 16px; }
+            .step { font-size: 18px; }
+            button { font-size: 18px; padding: 8px 16px; margin: 15px 5px; }
+            footer p { font-size: 14px; }
+            main { padding: 30px 10px; }
         }
     </style>
 </head>
@@ -72,7 +99,7 @@ MIT License - Copyright (c) 2026 Satish B.
 
     <footer>
         <p>Enjoy the magic of numbers and have fun learning math tricks!</p>
-        <p>Designed for curious kids by Satish B</p>
+        <p><strong>Designed for curious kids by Satish B</strong></p>
         <p>Contact: Satishb.iyer@gmail.com</p>
     </footer>
 
@@ -96,7 +123,6 @@ MIT License - Copyright (c) 2026 Satish B.
             const stepText = document.getElementById("stepText");
             const nextBtn = document.getElementById("nextBtn");
 
-            // If Try Again button exists from previous game, remove it
             const oldAgainBtn = document.getElementById("againBtn");
             if(oldAgainBtn) oldAgainBtn.remove();
 
@@ -110,7 +136,6 @@ MIT License - Copyright (c) 2026 Satish B.
                     if(currentStep === steps.length - 1){
                         nextBtn.style.display = "none";
 
-                        // Add Try Again button
                         const againBtn = document.createElement("button");
                         againBtn.id = "againBtn";
                         againBtn.textContent = "Try Again 🔄";
@@ -121,7 +146,7 @@ MIT License - Copyright (c) 2026 Satish B.
             };
         }
 
-        startGame(); // Initialize first game
+        startGame();
     </script>
 </body>
 </html>

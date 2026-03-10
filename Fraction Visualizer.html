@@ -10,12 +10,16 @@ MIT License - Copyright (c) 2026 Satish B.
 <meta charset="UTF-8">
 <title>Fraction Visualizer 🎨</title>
 
+<!-- Google Fonts: Baloo 2 -->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Baloo 2', cursive;
     background: linear-gradient(to right, #ffecd2, #fcb69f);
     text-align: center;
     padding: 30px;
+    font-size: 16px;
 }
 
 h1 {
@@ -45,6 +49,8 @@ button {
     margin-left: 10px;
     background-color: #4CAF50;
     color: white;
+    font-family: 'Baloo 2', cursive;
+    font-weight: bold;
 }
 
 button:hover {
@@ -88,6 +94,18 @@ button:hover {
 footer {
     margin-top: 50px;
     font-size: 16px;
+    font-family: 'Baloo 2', cursive;
+}
+
+/* Mobile responsiveness */
+@media (max-width:480px){
+    h1 { font-size: 28px; }
+    .description { font-size: 16px; }
+    input { font-size: 16px; width: 120px; }
+    button { font-size: 16px; padding: 8px 16px; margin-left: 5px; }
+    .bar { width: 300px; height: 40px; }
+    .message { font-size: 16px; }
+    footer { font-size: 14px; }
 }
 </style>
 </head>
@@ -110,7 +128,6 @@ footer {
 </footer>
 
 <script>
-
 function drawFraction() {
     const input = document.getElementById("fractionInput").value.trim();
     const barContainer = document.getElementById("barContainer");
@@ -160,7 +177,6 @@ function drawFraction() {
 
     message.innerHTML = `This shows ${numerator}/${denominator}`;
 }
-
 </script>
 
 </body>

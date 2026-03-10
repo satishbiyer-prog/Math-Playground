@@ -11,96 +11,114 @@ MIT License - Copyright (c) 2026 Satish B.
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LCM & HCF Calculator</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-    body {
-        font-family: 'Comic Sans MS', cursive, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-        color: #333;
-    }
+body {
+    font-family: 'Baloo 2', cursive, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+    color: #333;
+}
 
+.container {
+    max-width: 750px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #0d47a1;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+}
+
+.definition {
+    background-color: #fff9c4;
+    border-radius: 15px;
+    padding: 12px 20px;
+    margin: 15px 0 25px 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    resize: none;
+    box-sizing: border-box;
+    font-family: 'Baloo 2', cursive, sans-serif;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+    font-family: 'Baloo 2', cursive, sans-serif;
+}
+
+button:hover {
+    transform: scale(1.05);
+    opacity: 0.95;
+}
+
+.calculate-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.reset-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2e7d32;
+    white-space: pre-line;
+}
+
+.steps {
+    margin-top:15px;
+    font-size:16px;
+    white-space:pre-line;
+}
+
+footer {
+    text-align:center;
+    margin-top:30px;
+    font-size:16px;
+    color:#0d47a1;
+}
+
+@media (max-width:480px){
     .container {
-        max-width: 750px;
-        margin: auto;
-        padding: 30px 20px;
+        width:95%;
+        padding:15px;
     }
-
-    h1 {
-        text-align: center;
-        color: #0d47a1;
-    }
-
-    .definition {
-        background-color: #fff9c4;
-    	border-radius: 15px;
-   	padding: 12px 20px;
-   	margin: 15px 0 25px 0;
-   	width: 100%;
-    	box-sizing: border-box;
-    	font-size: 15px;
-    	line-height: 1.5;
-    }
-
-    .card {
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    }
-
-    textarea {
-        width: 100%;
-        height: 80px;
-        padding: 10px;
-        border-radius: 10px;
-        border: 2px solid #ccc;
-        font-size: 16px;
-        resize: none;
-        box-sizing: border-box;
-    }
-
-    button {
-        margin-top: 15px;
-        padding: 10px;
-        width: 100%;
-        font-size: 16px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: transform 0.2s ease;
-    }
-
-    button:hover {
-        transform: scale(1.05);
-        opacity: 0.95;
-    }
-
-    .calculate-btn {
-        background-color: #4caf50;
-        color: white;
-    }
-
-    .reset-btn {
-        background-color: #f44336;
-        color: white;
-    }
-
-    .result {
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #2e7d32;
-        white-space: pre-line;
-    }
-
-    footer {
-        text-align:center;
-        margin-top:30px;
-        font-size:15px;
-        color:#0d47a1;
-    }
+}
 </style>
 </head>
 
@@ -112,9 +130,7 @@ MIT License - Copyright (c) 2026 Satish B.
 
 <div class="definition">
 <strong>HCF (Highest Common Factor)</strong> is the biggest number that divides all the given numbers exactly.<br><br>
-
 <strong>LCM (Lowest Common Multiple)</strong> is the smallest number that is a multiple of all the given numbers.<br><br>
-
 <strong>Example:</strong><br>
 Take 4 and 6.<br>
 Multiples of 4 are 4, 8, 12, 16...<br>
@@ -133,6 +149,7 @@ oninput="validateInput()"></textarea>
 <button class="reset-btn" onclick="resetAll()">Reset</button>
 
 <div id="result" class="result"></div>
+<div id="steps" class="steps"></div>
 
 </div>
 
@@ -145,6 +162,7 @@ oninput="validateInput()"></textarea>
 </div>
 
 <script>
+
 function validateInput() {
     const inputField = document.getElementById("numberInput");
     inputField.value = inputField.value.replace(/[^0-9,]/g, '');
@@ -163,7 +181,23 @@ function lcm(a, b) {
     return (a * b) / gcd(a, b);
 }
 
+function primeFactors(n){
+    let factors=[];
+    let d=2;
+
+    while(n>1){
+        while(n%d===0){
+            factors.push(d);
+            n/=d;
+        }
+        d++;
+    }
+
+    return factors;
+}
+
 function calculate() {
+
     let input = document.getElementById("numberInput").value;
 
     if (input.trim() === "") {
@@ -189,13 +223,68 @@ function calculate() {
     }
 
     document.getElementById("result").innerText =
-        "HCF: " + currentHCF + "\nLCM: " + currentLCM;
+        "LCM: " + currentLCM + "\nHCF: " + currentHCF;
+
+    showSteps(numbers,currentHCF,currentLCM);
 }
+
+function showSteps(numbers,hcf,lcmValue){
+
+let html="";
+
+html+="<b>Steps to find LCM (Division Method)</b><br><br>";
+
+let nums=[...numbers];
+let divisors=[];
+
+while(nums.some(n=>n>1)){
+
+    let divisor=2;
+
+    while(!nums.some(n=>n%divisor===0)){
+        divisor++;
+    }
+
+    html+=divisor+" | "+nums.join(", ")+"<br>";
+
+    nums=nums.map(n=>n%divisor===0?n/divisor:n);
+    divisors.push(divisor);
+}
+
+html+="&nbsp;&nbsp;&nbsp;&nbsp;| "+nums.join(", ")+"<br><br>";
+
+html+="Multiply the divisors:<br>";
+html+=divisors.join(" × ")+" = "+lcmValue+"<br>";
+html+="<b>LCM = "+lcmValue+"</b><br><br>";
+
+html+="<b>Steps to find HCF (Prime Factorization)</b><br><br>";
+
+numbers.forEach(n=>{
+    let f=primeFactors(n);
+    html+=n+" = "+f.join(" × ")+"<br>";
+});
+
+html+="<br>";
+
+if(hcf===1){
+html+="The only common factor for the given numbers is 1.<br>";
+}else{
+html+="The highest common factor for the given numbers is "+hcf+".<br>";
+}
+
+html+="<b>HCF = "+hcf+"</b>";
+
+document.getElementById("steps").innerHTML=html;
+
+}
+
 
 function resetAll() {
     document.getElementById("numberInput").value = "";
     document.getElementById("result").innerText = "";
+    document.getElementById("steps").innerText = "";
 }
+
 </script>
 
 </body>

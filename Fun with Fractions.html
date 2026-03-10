@@ -9,116 +9,138 @@ MIT License - Copyright (c) 2026 Satish B.
 <head>
 <title>Fun with Fractions</title>
 
+<!-- Google Fonts: Baloo 2 -->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 body{
-font-family: "Comic Sans MS", "Comic Sans", cursive;
-background:#eef6ff;
-text-align:center;
-margin:0;
+    font-family: 'Baloo 2', cursive;
+    background:#eef6ff;
+    text-align:center;
+    margin:0;
+    font-size:16px;
 }
 
 h1{
-color:#2c3e50;
+    color:#2c3e50;
+    font-size:32px;
 }
 
 .container{
-background:white;
-padding:20px;
-margin:20px auto;
-width:700px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    background:white;
+    padding:20px;
+    margin:20px auto;
+    width:700px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    font-size:16px;
 }
 
 .tabs{
-margin-top:20px;
+    margin-top:20px;
 }
 
 .tab{
-display:inline-block;
-padding:12px 20px;
-cursor:pointer;
-background:#a9d6ff;
-border-radius:8px 8px 0 0;
-margin-right:5px;
-font-weight:bold;
+    display:inline-block;
+    padding:12px 20px;
+    cursor:pointer;
+    background:#a9d6ff;
+    border-radius:8px 8px 0 0;
+    margin-right:5px;
+    font-weight:bold;
+    font-size:16px;
 }
 
 .tab.active{
-background:#3498db;
-color:white;
-border-bottom:3px solid #1f5f8b;
+    background:#3498db;
+    color:white;
+    border-bottom:3px solid #1f5f8b;
 }
 
 .tabcontent{
-display:none;
-padding-top:10px;
+    display:none;
+    padding-top:10px;
 }
 
 .tabcontent.active{
-display:block;
+    display:block;
 }
 
 input{
-width:60px;
-font-size:18px;
-text-align:center;
-margin:5px;
+    width:60px;
+    font-size:18px;
+    text-align:center;
+    margin:5px;
 }
 
 select{
-font-size:18px;
+    font-size:18px;
 }
 
 button{
-font-size:16px;
-padding:10px 18px;
-margin:10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-transition:all 0.2s ease;
+    font-size:16px;
+    padding:10px 18px;
+    margin:10px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    font-family: 'Baloo 2', cursive;
+    font-weight:bold;
 }
 
 button:hover{
-transform:translateY(-3px);
-box-shadow:0 6px 12px rgba(0,0,0,0.25);
+    transform:translateY(-3px);
+    box-shadow:0 6px 12px rgba(0,0,0,0.25);
 }
 
 .calc{
-background:#27ae60;
-color:white;
+    background:#27ae60;
+    color:white;
 }
 
 .reset{
-background:#e74c3c;
-color:white;
+    background:#e74c3c;
+    color:white;
 }
 
 .result{
-font-size:22px;
-color:#1a5276;
-margin-top:10px;
-font-weight:bold;
+    font-size:22px;
+    color:#1a5276;
+    margin-top:10px;
+    font-weight:bold;
 }
 
 .explanation{
-background:#fff9d6;
-padding:12px;
-margin-top:10px;
-border-radius:8px;
-text-align:left;
-line-height:1.6;
+    background:#fff9d6;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    text-align:left;
+    line-height:1.6;
+    font-size:16px;
 }
 
 footer{
-margin-top:40px;
-padding:20px;
-background:#dff0ff;
-font-size:14px;
+    margin-top:40px;
+    padding:20px;
+    background:#dff0ff;
+    font-size:16px;
+    font-family: 'Baloo 2', cursive;
 }
 
+/* Mobile responsiveness */
+@media (max-width:480px){
+    .container { width:95%; padding:15px; }
+    h1 { font-size:24px; }
+    .tab { font-size:14px; padding:8px 12px; }
+    input, select { font-size:16px; width:50px; }
+    button { font-size:14px; padding:8px 14px; margin:5px; }
+    .result { font-size:18px; }
+    .explanation { font-size:14px; }
+    footer { font-size:14px; }
+}
 </style>
 </head>
 
@@ -135,246 +157,231 @@ font-size:14px;
 <div class="container">
 
 <!-- ADDITION SUBTRACTION -->
-
 <div id="addsub" class="tabcontent active">
-
 <h2>Add or Subtract Fractions</h2>
-
-<input type="number" id="a1"> /
-<input type="number" id="b1">
-
+<input type="number" id="a1"> / <input type="number" id="b1">
 <select id="op1">
 <option value="+">+</option>
 <option value="-">−</option>
 </select>
-
-<input type="number" id="c1"> /
-<input type="number" id="d1">
-
+<input type="number" id="c1"> / <input type="number" id="d1">
 <br>
-
 <button class="calc" onclick="calcAddSub()">Calculate</button>
 <button class="reset" onclick="resetAddSub()">Reset</button>
-
 <div class="result" id="result1"></div>
 <div class="explanation" id="exp1"></div>
-
 </div>
 
-
 <!-- MULTIPLICATION DIVISION -->
-
 <div id="muldiv" class="tabcontent">
-
 <h2>Multiply or Divide Fractions</h2>
-
-<input type="number" id="a2"> /
-<input type="number" id="b2">
-
+<input type="number" id="a2"> / <input type="number" id="b2">
 <select id="op2">
 <option value="*">×</option>
 <option value="/">÷</option>
 </select>
-
-<input type="number" id="c2"> /
-<input type="number" id="d2">
-
+<input type="number" id="c2"> / <input type="number" id="d2">
 <br>
-
 <button class="calc" onclick="calcMulDiv()">Calculate</button>
 <button class="reset" onclick="resetMulDiv()">Reset</button>
-
 <div class="result" id="result2"></div>
 <div class="explanation" id="exp2"></div>
-
 </div>
 
 </div>
 
 <footer>
-Keep exploring fractions and how numbers can be shared in equal parts!<br><br>
-Designed for curious kids by Satish B<br><br>
-Contact: Satishb.iyer@gmail.com
+<p>Keep exploring fractions and how numbers can be shared in equal parts!</p>
+<p><strong>Designed for curious kids by Satish B</strong></p>
+<p>Contact: Satishb.iyer@gmail.com</p>
 </footer>
 
 <script>
 
 function openTab(evt,tabName){
+    let tabs=document.querySelectorAll(".tab");
+    tabs.forEach(t=>t.classList.remove("active"));
+    evt.target.classList.add("active");
 
-let tabs=document.querySelectorAll(".tab");
-tabs.forEach(t=>t.classList.remove("active"));
-evt.target.classList.add("active");
-
-let content=document.querySelectorAll(".tabcontent");
-content.forEach(c=>c.classList.remove("active"));
-
-document.getElementById(tabName).classList.add("active");
+    let content=document.querySelectorAll(".tabcontent");
+    content.forEach(c=>c.classList.remove("active"));
+    document.getElementById(tabName).classList.add("active");
 }
 
-function gcd(a,b){
-return b==0?a:gcd(b,a%b);
-}
+function gcd(a,b){ return b==0?a:gcd(b,a%b); }
 
 function simplify(n,d){
-let g=gcd(Math.abs(n),Math.abs(d));
-return [n/g,d/g];
+    let g=gcd(Math.abs(n),Math.abs(d));
+    return [n/g,d/g];
 }
 
-function toMixed(n,d){
+function formatResult(n,d){
 
-if(Math.abs(n)<d) return "";
+    if(d==1){
+        return "Result = "+n;
+    }
 
-let whole=Math.trunc(n/d);
-let remainder=Math.abs(n%d);
+    if(Math.abs(n)>d){
 
-if(remainder==0) return whole;
+        let whole=Math.trunc(n/d);
+        let remainder=Math.abs(n%d);
 
-return whole+" "+remainder+"/"+d;
+        if(remainder==0){
+            return "Result = "+whole;
+        }
+
+        return "Result = "+n+"/"+d+
+        "<br>Mixed Fraction = "+whole+
+        " <span style='font-size:16px;color:#8e44ad;'>"+
+        remainder+"/"+d+
+        "</span>";
+    }
+
+    return "Result = "+n+"/"+d;
 }
+
 
 function calcAddSub(){
 
-let a=parseInt(a1.value);
-let b=parseInt(b1.value);
-let c=parseInt(c1.value);
-let d=parseInt(d1.value);
-let op=op1.value;
+    let a=parseInt(a1.value);
+    let b=parseInt(b1.value);
+    let c=parseInt(c1.value);
+    let d=parseInt(d1.value);
+    let op=op1.value;
 
-if(!a||!b||!c||!d){
-result1.innerHTML="Please fill all fields.";
-return;
-}
+    if(!a||!b||!c||!d){
+        result1.innerHTML="Please fill all fields.";
+        return;
+    }
 
-if(b==0||d==0){
-result1.innerHTML="Denominator cannot be zero.";
-return;
-}
+    if(b==0||d==0){
+        result1.innerHTML="Denominator cannot be zero.";
+        return;
+    }
 
-let common=b*d;
+    let common, newA, newC, explanation="";
 
-let mult1=d;
-let mult2=b;
+    if(b==d){
 
-let newA=a*mult1;
-let newC=c*mult2;
+        common=b;
+        newA=a;
+        newC=c;
 
-let num;
+        explanation+=
+        "<b>Step 1: Check the denominators.</b><br>"+
+        "Both denominators are "+b+". So they are already the same.<br><br>";
 
-if(op=="+") num=newA+newC;
-else num=newA-newC;
+    }else{
 
-let simp=simplify(num,common);
+        common=b*d;
+        let mult1=d;
+        let mult2=b;
 
-let mixed=toMixed(simp[0],simp[1]);
+        newA=a*mult1;
+        newC=c*mult2;
 
-result1.innerHTML="Result = "+simp[0]+"/"+simp[1]+
-(mixed?("<br>Mixed Fraction = "+mixed):"");
+        explanation+=
+        "<b>Step 1: Make the denominators the same.</b><br>"+
+        "The denominators are "+b+" and "+d+".<br>"+
+        "Multiply them to get a common denominator.<br>"+
+        b+" × "+d+" = "+common+".<br><br>"+
 
-exp1.innerHTML=
+        "<b>Step 2: Convert the first fraction.</b><br>"+
+        a+"/"+b+" becomes "+newA+"/"+common+".<br><br>"+
 
-"<b>Step 1: Make the denominators the same.</b><br>"+
-"The denominators are "+b+" and "+d+".<br>"+
-"We multiply them to get a common denominator: "+b+" × "+d+" = "+common+".<br><br>"+
+        "<b>Step 3: Convert the second fraction.</b><br>"+
+        c+"/"+d+" becomes "+newC+"/"+common+".<br><br>";
+    }
 
-"<b>Step 2: Convert the first fraction.</b><br>"+
-"The denominator "+b+" was multiplied by "+mult1+".<br>"+
-"So we multiply the numerator by "+mult1+" as well.<br>"+
-a+" × "+mult1+" = "+newA+".<br>"+
-"So "+a+"/"+b+" becomes "+newA+"/"+common+".<br><br>"+
+    let num = (op=="+") ? newA+newC : newA-newC;
 
-"<b>Step 3: Convert the second fraction.</b><br>"+
-"The denominator "+d+" was multiplied by "+mult2+".<br>"+
-"So we multiply the numerator by "+mult2+" as well.<br>"+
-c+" × "+mult2+" = "+newC+".<br>"+
-"So "+c+"/"+d+" becomes "+newC+"/"+common+".<br><br>"+
+    explanation+=
+    "<b>Step "+(b==d?2:4)+": "+(op=="+"?"Add":"Subtract")+" the numerators.</b><br>"+
+    newA+" "+op+" "+newC+" = "+num+".<br>"+
+    "So we get "+num+"/"+common+".<br><br>";
 
-"<b>Step 4: "+(op=="+"?"Add":"Subtract")+" the numerators.</b><br>"+
-newA+" "+op+" "+newC+" = "+num+".<br>"+
-"So we get "+num+"/"+common+".<br><br>"+
+    let simp=simplify(num,common);
 
-"<b>Step 5: Simplify the fraction.</b><br>"+
-num+"/"+common+" simplifies to "+simp[0]+"/"+simp[1]+".";
+    explanation+=
+    "<b>Step "+(b==d?3:5)+": Simplify the fraction.</b><br>"+
+    num+"/"+common+" simplifies to "+simp[0]+"/"+simp[1]+".";
 
+    result1.innerHTML=formatResult(simp[0],simp[1]);
+    exp1.innerHTML=explanation;
 }
 
 function calcMulDiv(){
 
-let a=parseInt(a2.value);
-let b=parseInt(b2.value);
-let c=parseInt(c2.value);
-let d=parseInt(d2.value);
-let op=op2.value;
+    let a=parseInt(a2.value);
+    let b=parseInt(b2.value);
+    let c=parseInt(c2.value);
+    let d=parseInt(d2.value);
+    let op=op2.value;
 
-if(!a||!b||!c||!d){
-result2.innerHTML="Please fill all fields.";
-return;
-}
+    if(!a||!b||!c||!d){
+        result2.innerHTML="Please fill all fields.";
+        return;
+    }
 
-if(b==0||d==0){
-result2.innerHTML="Denominator cannot be zero.";
-return;
-}
+    if(b==0||d==0){
+        result2.innerHTML="Denominator cannot be zero.";
+        return;
+    }
 
-let num,den,explain;
+    let num,den,explain;
 
-if(op=="*"){
+    if(op=="*"){
 
-num=a*c;
-den=b*d;
+        num=a*c;
+        den=b*d;
 
-explain=
-"<b>Step 1:</b> Multiply the numerators.<br>"+
-a+" × "+c+" = "+num+".<br><br>"+
+        explain=
+        "<b>Step 1:</b> Multiply the numerators.<br>"+
+        a+" × "+c+" = "+num+".<br><br>"+
 
-"<b>Step 2:</b> Multiply the denominators.<br>"+
-b+" × "+d+" = "+den+".";
+        "<b>Step 2:</b> Multiply the denominators.<br>"+
+        b+" × "+d+" = "+den+".";
 
-}
+    }else{
 
-else{
+        num=a*d;
+        den=b*c;
 
-num=a*d;
-den=b*c;
+        explain=
+        "<b>Step 1:</b> Flip the second fraction.<br>"+
+        c+"/"+d+" becomes "+d+"/"+c+".<br><br>"+
 
-explain=
-"<b>Step 1:</b> Flip the second fraction.<br>"+
-c+"/"+d+" becomes "+d+"/"+c+".<br><br>"+
+        "<b>Step 2:</b> Multiply the fractions.<br>"+
+        "Numerators: "+a+" × "+d+" = "+num+".<br>"+
+        "Denominators: "+b+" × "+c+" = "+den+".";
+    }
 
-"<b>Step 2:</b> Multiply the fractions.<br>"+
-"Numerators: "+a+" × "+d+" = "+num+".<br>"+
-"Denominators: "+b+" × "+c+" = "+den+".";
+    let simp=simplify(num,den);
 
-}
+    result2.innerHTML=formatResult(simp[0],simp[1]);
 
-let simp=simplify(num,den);
-let mixed=toMixed(simp[0],simp[1]);
-
-result2.innerHTML="Result = "+simp[0]+"/"+simp[1]+
-(mixed?("<br>Mixed Fraction = "+mixed):"");
-
-exp2.innerHTML=
-explain+
-"<br><br><b>Step 3:</b> Simplify the fraction.<br>"+
-num+"/"+den+" simplifies to "+simp[0]+"/"+simp[1]+".";
-
+    exp2.innerHTML=
+    explain+
+    "<br><br><b>Step 3:</b> Simplify the fraction.<br>"+
+    num+"/"+den+" simplifies to "+simp[0]+"/"+simp[1]+".";
 }
 
 function resetAddSub(){
-a1.value="";
-b1.value="";
-c1.value="";
-d1.value="";
-result1.innerHTML="";
-exp1.innerHTML="";
+    a1.value="";
+    b1.value="";
+    c1.value="";
+    d1.value="";
+    result1.innerHTML="";
+    exp1.innerHTML="";
 }
 
 function resetMulDiv(){
-a2.value="";
-b2.value="";
-c2.value="";
-d2.value="";
-result2.innerHTML="";
-exp2.innerHTML="";
+    a2.value="";
+    b2.value="";
+    c2.value="";
+    d2.value="";
+    result2.innerHTML="";
+    exp2.innerHTML="";
 }
 
 </script>
