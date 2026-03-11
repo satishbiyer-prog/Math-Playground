@@ -116,7 +116,7 @@ footer {
 
 <p>Enter a whole number and discover which numbers divide it exactly. You will also find out if it is a Prime or Composite number.</p>
 
-<input type="number" id="numberInput" placeholder="Enter a whole number" min="1">
+<input type="number" id="numberInput" placeholder="Enter a whole number (up to 5 digits)" min="1" max="99999" oninput="this.value=this.value.slice(0,5)">
 
 <br>
 
@@ -139,7 +139,7 @@ function findFactors() {
     let resultBox = document.getElementById("result");
 
     if (num === "" || num <= 0) {
-        resultBox.innerHTML = "Please enter a valid whole number greater than 0.";
+        resultBox.innerHTML = "Please enter a whole number between 1 and 99,999.";
         return;
     }
 
