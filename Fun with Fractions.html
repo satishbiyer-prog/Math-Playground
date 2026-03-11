@@ -159,12 +159,12 @@ footer{
 <!-- ADDITION SUBTRACTION -->
 <div id="addsub" class="tabcontent active">
 <h2>Add or Subtract Fractions</h2>
-<input type="number" id="a1"> / <input type="number" id="b1">
+<input type="number" id="a1" min="1"> / <input type="number" id="b1" min="1">
 <select id="op1">
 <option value="+">+</option>
 <option value="-">−</option>
 </select>
-<input type="number" id="c1"> / <input type="number" id="d1">
+<input type="number" id="c1" min="1"> / <input type="number" id="d1" min="1">
 <br>
 <button class="calc" onclick="calcAddSub()">Calculate</button>
 <button class="reset" onclick="resetAddSub()">Reset</button>
@@ -175,12 +175,12 @@ footer{
 <!-- MULTIPLICATION DIVISION -->
 <div id="muldiv" class="tabcontent">
 <h2>Multiply or Divide Fractions</h2>
-<input type="number" id="a2"> / <input type="number" id="b2">
+<input type="number" id="a2" min="1"> / <input type="number" id="b2" min="1">
 <select id="op2">
 <option value="*">×</option>
 <option value="/">÷</option>
 </select>
-<input type="number" id="c2"> / <input type="number" id="d2">
+<input type="number" id="c2" min="1"> / <input type="number" id="d2" min="1">
 <br>
 <button class="calc" onclick="calcMulDiv()">Calculate</button>
 <button class="reset" onclick="resetMulDiv()">Reset</button>
